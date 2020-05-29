@@ -20,8 +20,7 @@ public class LoginSteps {
     private final WebDriver driver = new FirefoxDriver();
     @Given("I am on the login page")
     public void i_am_on_the_login_page(){
-        // Automation needs to be implemented
-        //driver.get("localhost:3000");
+        driver.get("localhost:3000");
 
         // check we're on a given web page
         String url = driver.getCurrentUrl();
@@ -30,24 +29,36 @@ public class LoginSteps {
     @Given("I enter a {String}")
     public void i_enter_a_username(String username){
         // Automation needs to be implemented
+        driver.findElement(By.id("username")).sendKeys(username);
 
-        WebElement element = driver.findElement(By.id("usernameElement"));
+        WebElement element = driver.findElement(By.id("username"));
         String userInput = element.getText();
-        assert(!userInput.equals(""));
+        assert(userInput.equals(username));
+    }
+
+    @Given("I enter a {String}")
+    public void i_enter_a_password(String password){
+        driver.findElement(By.id("password")).sendKeys(password);
+
+        WebElement element = driver.findElement(By.id("password"));
+        String userInput = element.getText();
+        assert(userInput.equals(password));
     }
 
     @When("I press the login button")
     public void i_press_the_login_button(){
-        // Automation needs to be implemented
+        driver.findElement(By.id("loginButton")).click();
 
+        // no test needed
     }
     @Then("I will be {boolean}")
     public void i_will_be_logged_in(boolean loggedIn){
-        // Automation needs to be implemented
+        // no automation needed
 
         // check for the resulting elements that arise from logging in
         WebElement welcomeMessage = driver.findElement(By.id("welcomeMessage"));
-        assert(welcomeMessage.getText().equals("Welcome"));
+        boolean testedLoggedIn = welcomeMessage.getText().equals("Welcome");
+        assert(loggedIn == testedLoggedIn);
 
         System.out.println("You are now logged in");
     }
