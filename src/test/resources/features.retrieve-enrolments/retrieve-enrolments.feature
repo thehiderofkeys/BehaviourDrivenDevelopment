@@ -2,10 +2,8 @@ Feature: Retrieve current enrolments for a user
 
   Scenario Outline: User requests current enrolments
 
-    Given I am on the login page
-    And I enter a <Username>
-    And I enter a <Password>
-    And I press the login button
+    Given I am on the main page
+    And I am logged in with a <Username>
     When I press the "see enrolled courses" button
     Then My <Enrolled courses> are displayed
 
