@@ -4,7 +4,7 @@ Feature: Retrieve current enrolments for a user
 
     Given I am on the main page
     And I am logged in with a <Username>
-    When I press the "see enrolled courses" button
+    When I press the 'see enrolled courses' button
     Then My <Enrolled courses> are displayed
 
     Examples:
