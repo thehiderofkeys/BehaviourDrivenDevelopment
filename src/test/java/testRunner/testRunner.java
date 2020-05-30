@@ -1,15 +1,17 @@
 package testRunner;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import io.cucumber.junit.Cucumber;
 import org.junit.runner.RunWith;
 
-import static cucumber.api.SnippetType.CAMELCASE;
+import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features",
+@CucumberOptions(features = "src/test/resources/features.loginFeature",
+        plugin = {"pretty", "summary"},
+        strict = true, snippets = CAMELCASE,
+        dryRun=true,
         glue={"stepDefinitions"},
         monochrome=true)
 public class testRunner {
 }
-//E:\Year 4\SOFTENG 754\Assignment 5\SE754-Assignment-5\src\test\resources\features.loginFeature

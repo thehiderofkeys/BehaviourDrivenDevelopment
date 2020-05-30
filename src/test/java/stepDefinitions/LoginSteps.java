@@ -1,10 +1,10 @@
 package stepDefinitions;
 
 
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,15 +19,15 @@ public class LoginSteps {
 
     private final WebDriver driver = new FirefoxDriver();
     @Given("I am on the login page")
-    public void i_am_on_the_login_page(){
+    public void i_am_on_the_login_page() {
         driver.get("localhost:3000");
 
         // check we're on a given web page
         String url = driver.getCurrentUrl();
         assert(url.equals("localhost:3000"));
     }
-    @Given("I enter a username as \\\"([^\\\"]*)\\\"")
-    public void i_enter_a_username_as(String username){
+    @Given("I enter a username:{string}")
+    public void i_enter_a_username(String username){
         // Automation needs to be implemented
         driver.findElement(By.id("username")).sendKeys(username);
 
@@ -36,8 +36,8 @@ public class LoginSteps {
         assert(userInput.equals(username));
     }
 
-    @Given("I enter a password as \\\"([^\\\"]*)\\\"")
-    public void i_enter_a_password_as(String password){
+    @Given("I enter a password:{string}")
+    public void i_enter_a_password(String password){
         driver.findElement(By.id("password")).sendKeys(password);
 
         WebElement element = driver.findElement(By.id("password"));
@@ -51,14 +51,14 @@ public class LoginSteps {
 
         // no test needed
     }
-    @Then("I will be \\\"([^\\\"]*)\\\"")
+    @Then("I will be {string}")
     public void i_will_be_logged_in(String loggedIn){
         // no automation needed
 
         // check for the resulting elements that arise from logging in
         WebElement welcomeMessage = driver.findElement(By.id("welcomeMessage"));
         boolean testedLoggedIn = welcomeMessage.getText().equals("Welcome");
-        //assert(loggedIn == testedLoggedIn);
+        assert(loggedIn.equals(Boolean.toString(testedLoggedIn)));
 
         System.out.println("You are now logged in");
     }
