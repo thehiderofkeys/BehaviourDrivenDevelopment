@@ -12,11 +12,11 @@ public class Hooks {
 
     @Before
     public void startBrowser(){
-        String browser = "Chrome";
-        if (browser == "Chrome"){
+        String browser = "Firefox";
+        if (browser.equals("Chrome")){
             System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
             driver = new ChromeDriver();
-        } else if (browser == "IE") {
+        } else if (browser.equals("IE")) {
             System.setProperty("webdriver.ie.driver", "IEdriver.exe");
             driver = new InternetExplorerDriver();
         } else {
