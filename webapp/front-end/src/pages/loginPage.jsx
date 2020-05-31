@@ -25,8 +25,16 @@ class loginPage extends React.Component {
   }
 
   handleClick() {
-    console.log("Login Button is glicked");
-    this.props.history.push("/main");
+    fetch('/api/login',{
+      method:'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      })
+    }).then(res => res.json()).then(isLoginSuccessful => {
+      this.props.history.push(isLoginSuccessful?'/main':'/');
+    });
   }
 
   render() {
