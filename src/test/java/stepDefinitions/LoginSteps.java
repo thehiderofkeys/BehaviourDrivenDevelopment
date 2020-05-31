@@ -11,12 +11,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Assert;
+import pageObjects.LoginPage;
 
 import javax.annotation.Nullable;
 
 import static org.junit.Assert.*;
 
 public class LoginSteps {
+    LoginPage loginPage = new LoginPage(Hooks.driver);
 
     @Given("I am on the login page")
     public void i_am_on_the_login_page() {
@@ -28,8 +30,7 @@ public class LoginSteps {
     }
     @Given("I enter a username:{string}")
     public void i_enter_a_username(String username){
-        // Automation needs to be implemented
-        Hooks.driver.findElement(By.id("username")).sendKeys(username);
+        loginPage.enterUsername(username);
 
         WebElement element = Hooks.driver.findElement(By.id("username"));
         String userInput = element.getText();
@@ -38,7 +39,7 @@ public class LoginSteps {
 
     @Given("I enter a password:{string}")
     public void i_enter_a_password(String password){
-        Hooks.driver.findElement(By.id("password")).sendKeys(password);
+        loginPage.enterPassword(password);
 
         WebElement element = Hooks.driver.findElement(By.id("password"));
         String userInput = element.getText();
@@ -47,13 +48,14 @@ public class LoginSteps {
 
     @When("I press the login button")
     public void i_press_the_login_button(){
-        Hooks.driver.findElement(By.id("loginButton")).click();
+        loginPage.clickLoginButton();
 
         // no test needed
     }
     @Then("I will be {string}")
     public void i_will_be_logged_in(String loggedIn){
         // no automation needed
+        
         // check for the resulting elements that arise from logging in
         try {
             WebElement welcomeMessage = Hooks.driver.findElement(By.id("welcomeMessage"));
