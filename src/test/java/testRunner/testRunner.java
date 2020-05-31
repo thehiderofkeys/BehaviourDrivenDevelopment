@@ -7,10 +7,10 @@ import org.junit.runner.RunWith;
 import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features.loginFeature",
+@CucumberOptions(features = "src/test/resources/features/loginFeature",
         plugin = {"pretty", "summary"},
         strict = true, snippets = CAMELCASE,
-        dryRun=true,
+        dryRun=false,
         glue={"stepDefinitions"},
         monochrome=true)
 public class testRunner {
