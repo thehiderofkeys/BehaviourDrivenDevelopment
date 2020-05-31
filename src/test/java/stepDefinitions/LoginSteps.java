@@ -25,8 +25,7 @@ public class LoginSteps {
         Hooks.driver.get("http://localhost:3000");
 
         // check we're on a given web page
-        //assert(Hooks.driver.getCurrentUrl().equals("http://localhost:3000"));
-        assert(loginPage.getURI().equals("http://localhost:3000"));
+        assert(Hooks.driver.getCurrentUrl().equals("http://localhost:3000"));
     }
     @Given("I enter a username:{string}")
     public void i_enter_a_username(String username){

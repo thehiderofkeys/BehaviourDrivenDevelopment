@@ -43,9 +43,6 @@ public class LoginPage {
         return passwordElement.getText();
     }
 
-    public String getURI(){
-        return usernameElement.getAttribute("href");
-    }
 
 
 
