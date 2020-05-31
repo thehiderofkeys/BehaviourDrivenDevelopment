@@ -22,6 +22,7 @@ public class LoginPage {
     @FindBy(how= How.ID, using="loginButton")
     private WebElement loginButton;
 
+
     public void enterUsername(String username){
         usernameElement.sendKeys(username);
     }
@@ -33,6 +34,19 @@ public class LoginPage {
     public void clickLoginButton(){
         loginButton.click();
     }
+
+    public String getUsername(){
+        return usernameElement.getText();
+    }
+
+    public String getPassword(){
+        return passwordElement.getText();
+    }
+
+    public String getURI(){
+        return usernameElement.getAttribute("href");
+    }
+
 
 
 

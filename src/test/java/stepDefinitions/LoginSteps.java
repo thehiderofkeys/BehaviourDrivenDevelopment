@@ -25,25 +25,21 @@ public class LoginSteps {
         Hooks.driver.get("http://localhost:3000");
 
         // check we're on a given web page
-        String url = Hooks.driver.getCurrentUrl();
-        assert(url.equals("http://localhost:3000"));
+        //assert(Hooks.driver.getCurrentUrl().equals("http://localhost:3000"));
+        assert(loginPage.getURI().equals("http://localhost:3000"));
     }
     @Given("I enter a username:{string}")
     public void i_enter_a_username(String username){
         loginPage.enterUsername(username);
 
-        WebElement element = Hooks.driver.findElement(By.id("username"));
-        String userInput = element.getText();
-        assert(userInput.equals(username));
+        assert(loginPage.getUsername().equals(username));
     }
 
     @Given("I enter a password:{string}")
     public void i_enter_a_password(String password){
         loginPage.enterPassword(password);
 
-        WebElement element = Hooks.driver.findElement(By.id("password"));
-        String userInput = element.getText();
-        assert(userInput.equals(password));
+        assert(loginPage.getPassword().equals(password));
     }
 
     @When("I press the login button")
@@ -55,7 +51,7 @@ public class LoginSteps {
     @Then("I will be {string}")
     public void i_will_be_logged_in(String loggedIn){
         // no automation needed
-        
+
         // check for the resulting elements that arise from logging in
         try {
             WebElement welcomeMessage = Hooks.driver.findElement(By.id("welcomeMessage"));
