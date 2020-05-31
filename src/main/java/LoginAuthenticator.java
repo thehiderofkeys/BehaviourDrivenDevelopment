@@ -13,7 +13,7 @@ public class LoginAuthenticator {
     public boolean login(LoginRequestDTO request){
         String username = request.username;
         String password = request.password;
-        if (username.equals("username") && password.equals("password")){
+        if (username.equals("rightUsrN") && password.equals("rightPw")){
             return true;
         }
         return false;
