@@ -20,7 +20,7 @@ public class Hooks {
             System.setProperty("webdriver.ie.driver", "IEdriver.exe");
             driver = new InternetExplorerDriver();
         } else {
-            System.setProperty("webdriver.gecko.driver", "Geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
             driver = new FirefoxDriver();
         }
     }
