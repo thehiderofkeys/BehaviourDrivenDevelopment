@@ -3,7 +3,7 @@ Feature: Enroll into a course
   Background:
     Given user123 has completed SOFTENG 401,SOFTENG 402
     And rightUsr has completed no courses
-    And SOFTENG 754 is closed for enrollment
+    And COMPSYS 726 is closed for enrollment
 
   Scenario Outline: Enroll into a course when prerequisites are met and is within enrolment opening
     and closing times
@@ -43,4 +43,4 @@ Feature: Enroll into a course
 
     Examples:
       | User      | CourseName          | EnrolmentStatus         |
-      | 'user123' | 'SOFTENG 754'       | 'Not Enrolled'          |
+      | 'user123' | 'COMPSYS 726'       | 'Not Enrolled'          |

@@ -19,7 +19,7 @@ public class EnrollSteps {
     @Given("rightUsr has completed no courses")
     public void rightUsr_has_completed_no_courses() {}
 
-    @Given("SOFTENG 754 is closed for enrollment")
+    @Given("COMPSYS 726 is closed for enrollment")
     public void SOFTENG_754_is_closed_for_enrollment() {}
 
     // ------------------------ SCENARIO STEPS -------------------------
