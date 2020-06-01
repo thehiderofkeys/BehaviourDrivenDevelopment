@@ -36,11 +36,11 @@ public class LoginPage {
     }
 
     public String getUsername(){
-        return usernameElement.getText();
+        return usernameElement.getAttribute("value");
     }
 
     public String getPassword(){
-        return passwordElement.getText();
+        return passwordElement.getAttribute("value");
     }
 
 
