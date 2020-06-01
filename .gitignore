@@ -26,3 +26,7 @@ hs_err_pid*
 *.iml
 target/
 *.exe
+
+#floo plugin
+.floo
+.flooignore

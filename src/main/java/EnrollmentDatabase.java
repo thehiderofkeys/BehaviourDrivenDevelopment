@@ -1,7 +1,4 @@
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
@@ -78,7 +75,10 @@ public class EnrollmentDatabase {
 
     public ArrayList<Course> getCourseRequirements(String username) { return completedCourseDatabase.get(username); }
 
-    public ArrayList<Course> unenroll(String username, ArrayList<Course> courseToDrop){
+
+    @POST
+    @Path("{username}/unenroll")
+    public Response unenroll(@PathParam("username") String username, ArrayList<Course> courseToDrop){
         ArrayList<Course> currentEnrollments = enrolledCourseDatabase.get(username);
         ArrayList<Course> coursesAfterUnenroll = (ArrayList<Course>) currentEnrollments.clone();
 
@@ -93,6 +93,6 @@ public class EnrollmentDatabase {
         // Update the DB
         enrolledCourseDatabase.put(username, coursesAfterUnenroll);
 
-        return coursesAfterUnenroll;
+        return Response.ok().entity(coursesAfterUnenroll).build();
     }
 }
