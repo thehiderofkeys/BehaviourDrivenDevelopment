@@ -1,44 +1,46 @@
 Feature: Enroll into a course
 
   Background:
-    Given I am on the main page
-    And I am logged in as "user123"
-    And I have completed courses "SOFTENG401,SOFTENG402"
+    Given user123 has completed SOFTENG 401,SOFTENG 402
+    And rightUsr has completed no courses
+    And SOFTENG 754 is closed for enrollment
 
   Scenario Outline: Enroll into a course when prerequisites are met and is within enrolment opening
     and closing times
 
-    Given I enter a <CourseName> into the search bar
+    Given I am logged in as: <User> on the main page to enroll
+    And I enter a <CourseName> into the search bar
     And I press the 'search' button
-    When I press the 'enroll' button
-    Then I am <EnrolmentStatus> in the <CourseName>
+    When I press the 'enroll' button and press the 'save' button
+    Then I am <EnrolmentStatus> in <CourseName>
 
     Examples:
-    | CourseName       | EnrolmentStatus   |
-    | SOFTENG701       | Enrolled          |
-    | SOFTENG702       | Enrolled          |
+    | User       | CourseName          | EnrolmentStatus     |
+    | 'rightUsrN'| 'SOFTENG 701'       | 'Enrolled'          |
+    | 'user123'  | 'SOFTENG 702'       | 'Enrolled'          |
 
   Scenario Outline: Enroll into a course when prerequisites are NOT met
 
+    Given I am logged in as: <User> on the main page to enroll
     Given I enter a <CourseName> into the search bar
     And I press the 'search' button
-    When I press the 'enroll' button
-    Then I am <EnrolmentStatus> in the <CourseName>
+    When I press the 'enroll' button and press the 'save' button
+    Then I am <EnrolmentStatus> in <CourseName>
 
     Examples:
-      | CourseName       | EnrolmentStatus   |
-      | SOFTENG710       | NotEnrolled       |
-      | SOFTENG711       | NotEnrolled       |
+      | User       | CourseName          | EnrolmentStatus         |
+      | 'rightUsrN'| 'SOFTENG 702'       | 'Not Enrolled'          |
+      | 'rightUsrN'| 'SOFTENG 702'       | 'Not Enrolled'          |
 
   Scenario Outline: Enroll into a course when time is NOT within enrolment opening
   and closing times
 
+    Given I am logged in as: <User> on the main page to enroll
     Given I enter a <CourseName> into the search bar
     And I press the 'search' button
-    When I press the 'enroll' button
+    When I press the 'enroll' button and press the 'save' button
     Then I am <EnrolmentStatus> in <CourseName>
 
     Examples:
-      | CourseName       | EnrolmentStatus   |
-      | SOFTENG701       | NotEnrolled       |
-      | SOFTENG702       | NotEnrolled       |
+      | User      | CourseName          | EnrolmentStatus         |
+      | 'user123' | 'SOFTENG 754'       | 'Not Enrolled'          |
