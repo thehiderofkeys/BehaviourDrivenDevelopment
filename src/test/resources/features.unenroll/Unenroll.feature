@@ -12,10 +12,10 @@ Feature: Unenroll from a course
 
     Examples:
     | Username    | SpecificCourse      | CurrentEnrolments                               | ExpectedEnrolments    |
-    | user123     | SOFTENG701          | SOFTENG701                                      |                   |
-    | user123     | SOFTENG701          | SOFTENG701, SOFTENG702                          | SOFTENG702                   |
-    | user123     | SOFTENG702          | SOFTENG701, SOFTENG702, SOFTENG703              | SOFTENG701, SOFTENG703              |
-    | user123     | SOFTENG702          | SOFTENG701, SOFTENG702, SOFTENG703, SOFTENG704  | SOFTENG701, SOFTENG703, SOFTENG704  |
+    | user123     | SOFTENG701          | SOFTENG701                                      |                       |
+    | user123     | SOFTENG701          | SOFTENG701,SOFTENG702                           | SOFTENG702                   |
+    | user123     | SOFTENG702          | SOFTENG701,SOFTENG702,SOFTENG703                | SOFTENG701,SOFTENG703              |
+    | user123     | SOFTENG702          | SOFTENG701,SOFTENG702,SOFTENG703,SOFTENG704     | SOFTENG701,SOFTENG703,SOFTENG704  |
 
   Scenario Outline: Unenrolling from a course when the user is enrolled into at least one course,
   and the time is NOT within the acceptable start and end date for unenrolments
@@ -33,5 +33,5 @@ Feature: Unenroll from a course
 
     Examples:
       | Username    | SpecificCourse      | CurrentEnrolments        | ErrorMessage       |
-      | user123     | SOFTENG701          | SOFTENG701               | InvalidCourseError |
+      | user123     | SOFTENG702          | SOFTENG701               | InvalidCourseError |
 
