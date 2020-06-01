@@ -22,6 +22,9 @@ public class MainPage {
     @FindBy(how = How.ID, using="errorMessage")
     private WebElement errorMessageElement;
 
+    @FindBy(how = How.NAME, using="unenrollButton")
+    private List<WebElement> unenrollButtonList;
+
     public List<String> getCurrentEnrolmentsList(){
         List<String> currentEnrolmentsList = new ArrayList();
         for (WebElement currentEnrolledCourseElement : currentEnrolmentElementsList){
@@ -31,7 +34,7 @@ public class MainPage {
     }
 
     public void pressAnUnenrollButton(String specifiedCourse){
-        List<WebElement> buttonElementsList = new ArrayList();
+        List<WebElement> buttonElementsList = unenrollButtonList;
         for (WebElement buttonElement : buttonElementsList){
             if (buttonElement.getAttribute("courseName").equals(specifiedCourse)){
                 buttonElement.click();
