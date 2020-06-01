@@ -37,6 +37,9 @@ public class MainPage {
     @FindBy(how = How.ID, using = "courseSearchBar")
     private WebElement courseSearchBarElement;
 
+    @FindBy(how = How.ID, using="searchButton")
+    private WebElement searchButton;
+
     public List<String> getCurrentEnrolmentsList(){
         List<String> currentEnrolmentsList = new ArrayList();
         for (WebElement currentEnrolledCourseElement : currentEnrolmentElementsList){
@@ -53,8 +56,16 @@ public class MainPage {
         return completedCoursesList;
     }
 
+    public void enterCourseName(String search){
+        courseSearchBarElement.sendKeys(search);
+    }
+
     public String getSearchBarText(){
         return courseSearchBarElement.getText();
+    }
+
+    public void pressSearchButton() {
+        searchButton.click();
     }
 
     public String getEnrolmentStatus(String course){
