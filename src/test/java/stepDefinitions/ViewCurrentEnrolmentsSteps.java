@@ -21,9 +21,15 @@ public class ViewCurrentEnrolmentsSteps {
 
     @Given("I am logged in as: {string} on the main page")
     public void i_am_logged_in_on_the_main_page(String username) {
+        Hooks.driver.get("http://localhost:3000/"+username+"/main");
+
+        // check we're on a given web page
+        assert(Hooks.driver.getCurrentUrl().equals("http://localhost:3000/"+username+"/main"));
     }
 
     @Then("I can see my {string}")
     public void i_can_see_my_current_enrolments(String courseList) {
+        List<String> currentEnrolmentsList = Arrays.asList(courseList.split(","));
+        assertEquals(currentEnrolmentsList, mainPage.getCurrentEnrolmentsList());
     }
 }
