@@ -20,8 +20,31 @@ class mainPage extends React.Component {
     super(props);
     this.state = {
       enrolledCourses: [{}],
-      userName: this.props.match.params.username
+      userName: this.props.match.params.username,
+      unenrollCourses: []
     };
+  }
+
+  async handleUnenrollClick() {
+    fetch(`/api/enrollments/${this.state.userName}/unenroll`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state.unenrollCourses)
+    })
+      .then(res => res.json())
+      .then(() => this.updateCourse());
+  }
+
+  handleRemoveClick(courseName) {
+    this.setState(prevState => ({
+      unenrollCourses: [...prevState.unenrollCourses, courseName]
+    }));
+
+    console.log(this.state.unenrollCourses);
+  }
+
+  async handleUpdateEnrolmentClick() {
+    await this.handleUnenrollClick();
   }
 
   updateCourse() {
@@ -55,9 +78,21 @@ class mainPage extends React.Component {
                 <ListItemText
                   primary={course.courseName}
                   id="currentEnrolledCourse"
+                  style={
+                    this.state.unenrollCourses.includes(course.courseName)
+                      ? { textDecorationLine: "line-through" }
+                      : {}
+                  }
                 />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" onClick={() => {}}>
+                  <IconButton
+                    courseName={course.courseName}
+                    id="unenrollButton"
+                    edge="end"
+                    onClick={() => {
+                      this.handleRemoveClick(course.courseName);
+                    }}
+                  >
                     <RemoveIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
@@ -66,7 +101,15 @@ class mainPage extends React.Component {
           </List>
           <Divider />
         </div>
-        <div></div>
+        <div>
+          <Button
+            id="saveButton"
+            variant="outlined"
+            onClick={() => this.handleUpdateEnrolmentClick()}
+          >
+            Update Enrolments
+          </Button>
+        </div>
       </div>
     );
   }
