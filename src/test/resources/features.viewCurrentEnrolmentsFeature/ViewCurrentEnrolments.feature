@@ -8,6 +8,6 @@ Feature: Viewing current enrolments
     Then I can see my <CurrentEnrolments>
 
     Examples:
-    | Username      | CurrentEnrolments     |
-    | user123       | 701                   |
-    | user456       | 701, 702              |
+    | Username      | CurrentEnrolments                    |
+    | user123       | SOFTENG701                           |
+    | user456       | SOFTENG701, SOFTENG702               |
