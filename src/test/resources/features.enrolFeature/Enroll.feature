@@ -36,7 +36,7 @@ Feature: Enroll into a course
     Given I enter a <CourseName> into the search bar
     And I press the 'search' button
     When I press the 'enroll' button
-    Then I am <EnrolmentStatus> in the <CourseName>
+    Then I am <EnrolmentStatus> in <CourseName>
 
     Examples:
       | CourseName       | EnrolmentStatus   |
