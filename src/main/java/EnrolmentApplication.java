@@ -7,13 +7,17 @@ import java.util.Set;
 public class EnrolmentApplication extends Application {
 
     private Set<Object> singletons = new HashSet<Object>();
+    private Set<Class<?>> classes = new HashSet<>();
 
     public EnrolmentApplication() {
         singletons.add(new LoginAuthenticator());
+        singletons.add(new Enrol());
+        singletons.add(CourseCatalog.getInstance());
     }
 
     @Override
     public Set<Object> getSingletons() {
         return singletons;
     }
+
 }
