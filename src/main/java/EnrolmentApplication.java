@@ -13,6 +13,7 @@ public class EnrolmentApplication extends Application {
         singletons.add(new LoginAuthenticator());
         singletons.add(new Enrol());
         singletons.add(CourseCatalog.getInstance());
+        singletons.add(new TimetableViewer());
     }
 
     @Override
