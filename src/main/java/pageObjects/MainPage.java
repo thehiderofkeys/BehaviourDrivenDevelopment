@@ -16,31 +16,13 @@ public class MainPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(how = How.ID, using="username")
-    private WebElement usernameElement;
-
-    @FindBy(how = How.ID, using="showCurrentEnrolmentsButton")
-    private WebElement showCurrentEnrolmentsButtonElement;
-
-    @FindBy(how = How.NAME, using="currentEnrolledCourse")
+    @FindBy(how = How.ID, using="currentEnrolledCourse")
     private List<WebElement> currentEnrolmentElementsList;
-
-    public void click_show_current_enrolments_button(){
-        showCurrentEnrolmentsButtonElement.click();
-    }
-
-    public void logIn(String username){
-        usernameElement.sendKeys(username);
-    }
-
-    public String getUsername(){
-        return usernameElement.getAttribute("value");
-    }
 
     public List<String> getCurrentEnrolmentsList(){
         List<String> currentEnrolmentsList = new ArrayList();
         for (WebElement currentEnrolledCourseElement : currentEnrolmentElementsList){
-            currentEnrolmentsList.add(currentEnrolledCourseElement.getAttribute("value"));
+            currentEnrolmentsList.add(currentEnrolledCourseElement.getText());
         }
         return currentEnrolmentsList;
     }
