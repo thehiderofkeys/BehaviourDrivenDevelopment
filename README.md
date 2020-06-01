@@ -1,6 +1,6 @@
 # SE754-Assignment-5
  
- This reposotory contains a fullstack web application for enrollment at the Univrsity of Auckland. It contains both frontend and backend code. 
+ This reposotory contains a fullstack web application for enrollment at the University of Auckland. It contains both frontend and backend code. 
  
  The backend is written in Java using the Jax-RS framework to create a REST API. 
  
