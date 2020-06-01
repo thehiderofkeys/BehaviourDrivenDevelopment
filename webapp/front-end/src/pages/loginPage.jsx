@@ -25,16 +25,20 @@ class loginPage extends React.Component {
   }
 
   handleClick() {
-    fetch('/api/login',{
-      method:'POST',
-      headers: {'Content-Type':'application/json'},
+    fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: this.state.username,
-        password: this.state.password,
+        password: this.state.password
       })
-    }).then(res => res.json()).then(isLoginSuccessful => {
-      this.props.history.push(isLoginSuccessful?'/main':'/');
-    });
+    })
+      .then(res => res.json())
+      .then(isLoginSuccessful => {
+        this.props.history.push(
+          isLoginSuccessful ? `/${this.state.username}/main` : "/"
+        );
+      });
   }
 
   render() {
