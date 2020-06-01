@@ -10,9 +10,11 @@ import pageObjects.LoginPage;
 import pageObjects.MainPage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UnenrollSteps {
+    MainPage mainPage = new MainPage(Hooks.driver);
 
     @Given("I am on the main page")
     public void i_am_on_the_main_page(){
@@ -21,12 +23,14 @@ public class UnenrollSteps {
 
     @Given("I am logged in as: {string}")
     public void i_am_logged_in(String username){
+        mainPage.logIn(username);
+
         assert(mainPage.getUsername().equals(username));
     }
 
     @When("I press the 'unenroll' button next to a listed {string}")
     public void i_press_the_unenroll_button_next_to_a_listed_course(String course){
-
+        mainPage.pressAnUnenrollButton(course);
     }
 
     @Then("I can see my <string> without the <string>, as <string>")
@@ -35,10 +39,9 @@ public class UnenrollSteps {
             String specifiedCourse,
             String expectedEnrolmentsCommaSeparated)
     {
-        List<String> currentEnrolments = new ArrayList();
-        List<String> expectedEnrolments = new ArrayList();
+        List<String> expectedEnrolments = Arrays.asList(expectedEnrolmentsCommaSeparated.split(","));
 
-        assert(mainPage.getCurrentEnrolments().equals(expectedEnrolments));
+        assert(mainPage.getCurrentEnrolmentsList().equals(expectedEnrolments));
     }
 
     @Then("I can see my <string> as before, and see an <string>")
@@ -46,9 +49,9 @@ public class UnenrollSteps {
             String currentEnrolmentsCommaSeparated,
             String errorMessage)
     {
-        List<String> currentEnrolments = new ArrayList();
+        List<String> currentEnrolments = Arrays.asList(currentEnrolmentsCommaSeparated.split(","));
 
-        assert(mainPage.getCurrentEnrolments().equals(currentEnrolments));
-        assert(mainpage.getErrorMessage().equals(errorMessage));
+        assert(mainPage.getCurrentEnrolmentsList().equals(currentEnrolments));
+        assert(mainPage.getErrorMessage().equals(errorMessage));
     }
 }
