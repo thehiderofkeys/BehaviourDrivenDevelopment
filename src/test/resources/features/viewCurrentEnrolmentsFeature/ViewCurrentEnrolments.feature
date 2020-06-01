@@ -8,5 +8,5 @@ Feature: Viewing current enrolments
 
     Examples:
     | Username      | CurrentEnrolments                    |
-    | 'rightUsrN'     | 'SOFTENG 701'                      |
-    | 'user123'     | 'SOFTENG 701,SOFTENG 754'            |
+    | 'rightUsrN'     | 'SOFTENG 754'                      |
+    | 'user123'     | 'SOFTENG 754,SOFTENG 701'            |
