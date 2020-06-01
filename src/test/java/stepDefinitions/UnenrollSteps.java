@@ -40,10 +40,16 @@ public class UnenrollSteps {
     }
 
     @Then("The list of enrolled courses should be updated to {string}")
-    public void i_can_see_my_current_enrolments_without_the_specified_course(
-            String expectedEnrolmentsCommaSeparated)
+    public void i_can_see_my_current_enrolments_without_the_specified_course(String expectedEnrolmentsCommaSeparated)
     {
-        List<String> expectedEnrolments = Arrays.asList(expectedEnrolmentsCommaSeparated.split(","));
+        List<String> expectedEnrolments;
+
+        if (expectedEnrolmentsCommaSeparated.equals("")){
+            expectedEnrolments = new ArrayList<>();
+        } else {
+            expectedEnrolments = Arrays.asList(expectedEnrolmentsCommaSeparated.split(","));
+        }
+
 
         assert(mainPage.getCurrentEnrolmentsList().equals(expectedEnrolments));
     }

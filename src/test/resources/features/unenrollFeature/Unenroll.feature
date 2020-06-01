@@ -8,6 +8,6 @@ Feature: Unenroll from a course
 
     Examples:
     |Username   | SpecificCourse| CurrentEnrolments      | ExpectedEnrolments|
-    |'rightUsrN'| 'SOFTENG754'  | 'SOFTENG754'           | ''                |
-    |'user123'   | 'SOFTENG701'  | 'SOFTENG754,SOFTENG701'| 'SOFTENG754'      |
+    |'rightUsrN'| 'SOFTENG 754'  | 'SOFTENG 754'           | ''                |
+    |'user123'   | 'SOFTENG 701'  | 'SOFTENG 754,SOFTENG 701'| 'SOFTENG 754'      |
 

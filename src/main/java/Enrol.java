@@ -22,11 +22,6 @@ public class Enrol {
         enrollmentProcessor = new EnrollmentProcessor(enrollmentDatabase);
         enrollmentRequestVerifier = new EnrollmentRequestVerifier(new EnrollmentDateVerifier(), new ClashVerifier(), new PrerequisitesVerifier());
 
-
-        ArrayList<Course> enrolledCourses = new ArrayList<>();
-        enrolledCourses.add(CourseCatalog.getInstance().search("SOFTENG 754").get(0));
-        enrollmentDatabase.addEnrollment("rightUsrN", enrolledCourses);
-
         ArrayList<Course> enrolledCourses1 = new ArrayList<>();
         enrolledCourses1.add(CourseCatalog.getInstance().search("SOFTENG 754").get(0));
         ArrayList<Course> enrolledCourses2 = new ArrayList<>();
