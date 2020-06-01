@@ -27,14 +27,14 @@ public class ViewCurrentEnrolmentsSteps {
 
     @Given("I am logged in as: {String}")
     public void i_am_logged_in(String username){
-
+        mainPage.logIn(username);
 
         assert(mainPage.getUsername().equals(username));
     }
 
     @When ("I press the 'show current enrolments' button")
     public void i_press_the_show_current_enrolments_button(){
-
+        mainPage.click_show_current_enrolments_button();
     }
 
     @Then ("I can see my {CurrentEnrolments}")

@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,14 +16,32 @@ public class MainPage {
         PageFactory.initElements(driver, this);
     }
 
+    @FindBy(how = How.ID, using="username")
+    private WebElement usernameElement;
+
+    @FindBy(how = How.ID, using="showCurrentEnrolmentsButton")
+    private WebElement showCurrentEnrolmentsButtonElement;
+
+    @FindBy(how = How.NAME, using="currentEnrolledCourse")
+    private List<WebElement> currentEnrolmentElementsList;
+
+    public void click_show_current_enrolments_button(){
+        showCurrentEnrolmentsButtonElement.click();
+    }
+
+    public void logIn(String username){
+        usernameElement.sendKeys(username);
+    }
+
     public String getUsername(){
-        return "";
+        return usernameElement.getAttribute("value");
     }
 
     public List<String> getCurrentEnrolmentsList(){
-        return new ArrayList<>();
+        List<String> currentEnrolmentsList = new ArrayList();
+        for (WebElement currentEnrolledCourseElement : currentEnrolmentElementsList){
+            currentEnrolmentsList.add(currentEnrolledCourseElement.getAttribute("value"));
+        }
+        return currentEnrolmentsList;
     }
-
-
-
 }
