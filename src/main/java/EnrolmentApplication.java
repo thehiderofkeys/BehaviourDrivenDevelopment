@@ -11,7 +11,8 @@ public class EnrolmentApplication extends Application {
 
     public EnrolmentApplication() {
         singletons.add(new LoginAuthenticator());
-        singletons.add(new EnrollmentDatabase());
+        singletons.add(new Enrol());
+        singletons.add(CourseCatalog.getInstance());
     }
 
     @Override

@@ -17,14 +17,14 @@ public class Course {
     private ArrayList<TimetableEvent> courseSchedule;
     private int remainingSeats = 0;
     private LinkedList<RequestObject> waitList;
-    private ArrayList<String> prerequisites;
+    private ArrayList<String> prerequisites = new ArrayList<>();
 
     public Course (String courseName, LocalDateTime openingDate, LocalDateTime closingDate,  ArrayList<TimetableEvent> courseSchedule){
         this.openingDate = openingDate;
         this.closingDate = closingDate;
         this.courseName = courseName;
         this.courseSchedule = courseSchedule;
-        this.waitList = new LinkedList<RequestObject>();
+        this.waitList = new LinkedList<>();
     }
 
     public Course(String courseName, LocalDateTime openingDate, LocalDateTime closingDate,  ArrayList<TimetableEvent> courseSchedule, int remainingSeats) {
