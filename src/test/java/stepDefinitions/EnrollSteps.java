@@ -12,37 +12,45 @@ import java.util.List;
 public class EnrollSteps {
     MainPage mainPage = new MainPage(Hooks.driver);
 
-    @Given("I am on the main page")
-    public void i_am_on_the_main_page(){
-        assert(Hooks.driver.getCurrentUrl().equals("http://localhost:3000/"));
-    }
+    // ------------------ EMPTY STEPS FOR READABILITY ------------------
+    @Given("user123 has completed SOFTENG 401,SOFTENG 402")
+    public void user123_has_completed_SOFTENG_401_and_SOFTENG_402() {}
 
-    @And("I am logged in as: {string}")
-    public void i_am_logged_in(String username){
-        mainPage.logIn(username);
-        assert(mainPage.getUsername().equals(username));
-    }
+    @Given("rightUsr has completed no courses")
+    public void rightUsr_has_completed_no_courses() {}
 
-    @And("I have completed courses {string}")
-    public void i_have_completed_courses(String completedCoursesCommaSeparated){
-        List<String> completedCoursesList = Arrays.asList(completedCoursesCommaSeparated.split(","));
+    @Given("SOFTENG 754 is closed for enrollment")
+    public void SOFTENG_754_is_closed_for_enrollment() {}
 
-        assert(mainPage.getCompletedCoursesList().equals(completedCoursesList));
+    // ------------------------ SCENARIO STEPS -------------------------
+
+    @Given("I am logged in as: {string} on the main page to enroll")
+    public void i_am_logged_in_on_the_main_page(String username) {
+        Hooks.driver.get("http://localhost:3000/"+username+"/main");
+
+        // check we're on a given web page
+        assert(Hooks.driver.getCurrentUrl().equals("http://localhost:3000/"+username+"/main"));
     }
 
     @Given("I enter a {string} into the search bar")
     public void i_enter_a_course_name_into_the_search_bar(String courseName){
+        mainPage.enterCourseName(courseName);
         assert(mainPage.getSearchBarText().equals(courseName));
     }
 
-    @When("I press the 'enroll' button")
-    public void i_press_the_enroll_button(String courseName){
-        mainPage.pressAnEnrollButton(courseName);
+    @Given("I press the 'search' button")
+    public void i_press_the_search_button() {
+        mainPage.pressSearchButton();
     }
 
-    @Then("I am {string} in <CourseName>")
+    @When("I press the 'enroll' button and press the 'save' button")
+    public void i_press_the_enroll_button(String courseName){
+        mainPage.pressAnEnrollButton(courseName);
+        mainPage.pressSaveButton();
+    }
+
+    @Then("I am {string} in {string}")
     public void i_am_enrolled_in_the_course(String enrolmentStatus, String courseName){
         assert(mainPage.getEnrolmentStatus(courseName).equals(enrolmentStatus));
     }
-
 }
