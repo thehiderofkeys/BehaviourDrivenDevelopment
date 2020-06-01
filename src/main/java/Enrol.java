@@ -23,7 +23,10 @@ public class Enrol {
         enrollmentRequestVerifier = new EnrollmentRequestVerifier(new EnrollmentDateVerifier(), new ClashVerifier(), new PrerequisitesVerifier());
 
 
-        // mock user data for pre-enrolled course
+        ArrayList<Course> enrolledCourses = new ArrayList<>();
+        enrolledCourses.add(CourseCatalog.getInstance().search("SOFTENG 754").get(0));
+        enrollmentDatabase.addEnrollment("rightUsrN", enrolledCourses);
+
         ArrayList<Course> enrolledCourses1 = new ArrayList<>();
         enrolledCourses1.add(CourseCatalog.getInstance().search("SOFTENG 754").get(0));
         ArrayList<Course> enrolledCourses2 = new ArrayList<>();
@@ -31,6 +34,7 @@ public class Enrol {
         enrolledCourses2.add(CourseCatalog.getInstance().search("SOFTENG 701").get(0));
         enrollmentDatabase.addEnrollment("rightUsrN", enrolledCourses1);
         enrollmentDatabase.addEnrollment("user123", enrolledCourses2);
+
     }
 
     @GET
