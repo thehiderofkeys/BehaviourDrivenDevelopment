@@ -9,13 +9,13 @@
  
  # Running the backend
  
- To backend is deployed using Apache Tomcat. This is provided as part of intelliJ Uiltimate. More information regarding set up of Apache Tomcat can be found here: http://tomcat.apache.org/.
+ The backend is deployed using Apache Tomcat. This is provided as part of intelliJ Uiltimate. More information regarding the set up of Apache Tomcat can be found here: http://tomcat.apache.org/.
  
- Using intelliJ to run the backend and deploy it via Apache Tomcat follow the steps outlined in this tutorial: https://mkyong.com/intellij/intellij-idea-run-debug-web-application-on-tomcat/
+ Use intelliJ to run the backend and deploy it via Apache Tomcat. Follow the steps outlined in this tutorial: https://mkyong.com/intellij/intellij-idea-run-debug-web-application-on-tomcat/
 
 # Running the frontend
 
-The frontend is requires an installation of node.js with a version greater than 12. An installation guide can be found here https://nodejs.org/en/download/
+The frontend requires an installation of node.js with a version greater than 12. An installation guide can be found here https://nodejs.org/en/download/
 
 To run the frontend navigate into the directory SE754-Assignment-5/webapp/frontend 
 
