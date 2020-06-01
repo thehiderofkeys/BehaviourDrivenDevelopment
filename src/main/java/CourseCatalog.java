@@ -3,6 +3,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,42 +26,25 @@ public class CourseCatalog {
 
     private CourseCatalog(){
 
-
-
-        ArrayList<TimetableEvent> courseSchedule = new ArrayList<TimetableEvent>();
-        TimetableEvent lec = new TimetableEvent(LocalDateTime.parse("2014-04-28T16:00:00.00"), 1, TimetableEvent.EventType.Lecture);
-        TimetableEvent tut = new TimetableEvent(LocalDateTime.parse("2014-04-29T16:00:00.00"), 1, TimetableEvent.EventType.Tutorial);
-        TimetableEvent lab = new TimetableEvent(LocalDateTime.parse("2014-04-30T16:00:00.00"), 1, TimetableEvent.EventType.Lab);
-
-        courseSchedule.add(lec);
-        courseSchedule.add(tut);
-        courseSchedule.add(lab);
-
-        ArrayList<TimetableEvent> courseSchedule1 = new ArrayList<TimetableEvent>();
-        TimetableEvent lec1 = new TimetableEvent(LocalDateTime.parse("2020-04-28T10:00:00.00"), 1, TimetableEvent.EventType.Lecture);
-        TimetableEvent tut1 = new TimetableEvent(LocalDateTime.parse("2020-04-29T10:00:00.00"), 1, TimetableEvent.EventType.Tutorial);
-        TimetableEvent lab1 = new TimetableEvent(LocalDateTime.parse("2020-04-30T10:00:00.00"), 1, TimetableEvent.EventType.Lab);
-
-        courseSchedule1.add(lec1);
-        courseSchedule1.add(tut1);
-        courseSchedule1.add(lab1);
-
-        ArrayList<TimetableEvent> courseSchedule2 = new ArrayList<TimetableEvent>();
-        TimetableEvent lec2 = new TimetableEvent(LocalDateTime.parse("2020-04-28T11:00:00.00"), 1, TimetableEvent.EventType.Lecture);
-        TimetableEvent tut2 = new TimetableEvent(LocalDateTime.parse("2020-04-29T11:00:00.00"), 1, TimetableEvent.EventType.Tutorial);
-        TimetableEvent lab2 = new TimetableEvent(LocalDateTime.parse("2020-04-30T11:00:00.00"), 1, TimetableEvent.EventType.Lab);
-
-        courseSchedule2.add(lec2);
-        courseSchedule2.add(tut2);
-        courseSchedule2.add(lab2);
-
-        Course c1 = new Course("SOFTENG 754", (LocalDateTime.parse("2020-05-28T16:00:00.00")), (LocalDateTime.parse("2020-07-28T16:00:00.00")), courseSchedule);
-        Course c2 = new Course("SOFTENG 701", (LocalDateTime.parse("2020-05-28T16:00:00.00")), (LocalDateTime.parse("2020-07-28T16:00:00.00")), courseSchedule1);
-        Course c3 = new Course("COMPSYS 726", (LocalDateTime.parse("2020-05-28T16:00:00.00")), (LocalDateTime.parse("2020-07-28T16:00:00.00")), courseSchedule2);
-
-        courseCatalog.add(c1);
-        courseCatalog.add(c2);
-        courseCatalog.add(c3);
+        createCourse("SOFTENG 401",
+                "2014-04-28T10:00:00.00","2014-04-29T10:00:00.00","2014-04-30T10:00:00.00",
+                "2020-05-28T16:00:00.00","2020-07-28T16:00:00.00",50,new ArrayList<>());
+        createCourse("SOFTENG 402",
+                "2014-04-28T12:00:00.00","2014-04-29T12:00:00.00","2014-04-30T12:00:00.00",
+                "2020-05-28T16:00:00.00","2020-07-28T16:00:00.00",50,new ArrayList<>());
+        createCourse("SOFTENG 754",
+                "2014-04-28T16:00:00.00","2014-04-29T16:00:00.00","2014-04-30T16:00:00.00",
+                "2020-05-28T16:00:00.00","2020-07-28T16:00:00.00",50,new ArrayList<>());
+        createCourse("SOFTENG 701",
+                "2014-04-28T10:00:00.00","2014-04-29T10:00:00.00","2014-04-30T10:00:00.00",
+                "2020-05-28T16:00:00.00","2020-07-28T16:00:00.00",50,new ArrayList<>());
+        ArrayList<String> prereq = new ArrayList<>(Arrays.asList("SOFTENG 401", "SOFTENG 402"));
+        createCourse("SOFTENG 702",
+                "2014-04-28T12:00:00.00","2014-04-29T12:00:00.00","2014-04-30T12:00:00.00",
+                "2020-05-28T16:00:00.00","2020-07-28T16:00:00.00",50, prereq);
+        createCourse("COMPSYS 726",
+                "2014-04-28T11:00:00.00","2014-04-29T11:00:00.00","2014-04-30T11:00:00.00",
+                "2019-05-28T16:00:00.00","2019-07-28T16:00:00.00",50,new ArrayList<>());
     }
 
     @GET
@@ -75,6 +59,20 @@ public class CourseCatalog {
             }
         }
         return searchResults;
+    }
+
+    private void createCourse(String name,String lecTime,String tutTime,String labTime,String openTime, String closeTime,int seats, ArrayList<String> prereq){
+        ArrayList<TimetableEvent> courseSchedule = new ArrayList<>();
+        TimetableEvent lec = new TimetableEvent(LocalDateTime.parse(lecTime), 1, TimetableEvent.EventType.Lecture);
+        TimetableEvent tut = new TimetableEvent(LocalDateTime.parse(tutTime), 1, TimetableEvent.EventType.Tutorial);
+        TimetableEvent lab = new TimetableEvent(LocalDateTime.parse(labTime), 1, TimetableEvent.EventType.Lab);
+
+        courseSchedule.add(lec);
+        courseSchedule.add(tut);
+        courseSchedule.add(lab);
+
+        Course c = new Course(name, (LocalDateTime.parse(openTime)), (LocalDateTime.parse(closeTime)), courseSchedule,seats,prereq);
+        courseCatalog.add(c);
     }
 
     public static CourseCatalog getInstance(){
