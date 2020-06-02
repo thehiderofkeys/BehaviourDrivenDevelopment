@@ -29,8 +29,8 @@ Feature: Enroll into a course
 
     Examples:
       | User       | CourseName          | EnrolmentStatus         |
-      | 'rightUsrN'| 'SOFTENG 702'       | 'Not Enrolled'          |
-      | 'rightUsrN'| 'SOFTENG 702'       | 'Not Enrolled'          |
+      | 'rightUsrN'| 'SOFTENG 702'       | 'NotEnrolled'          |
+      | 'rightUsrN'| 'SOFTENG 702'       | 'NotEnrolled'          |
 
   Scenario Outline: Enroll into a course when time is NOT within enrolment opening
   and closing times
@@ -43,4 +43,4 @@ Feature: Enroll into a course
 
     Examples:
       | User      | CourseName          | EnrolmentStatus         |
-      | 'user123' | 'COMPSYS 726'       | 'Not Enrolled'          |
+      | 'user123' | 'COMPSYS 726'       | 'NotEnrolled'          |
