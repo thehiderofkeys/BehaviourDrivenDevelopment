@@ -69,7 +69,11 @@ class mainPage extends React.Component {
   async handleUpdateEnrolmentClick() {
     await this.handleUnenrollClick();
     await this.handleEnrolling();
-    this.setState({ coursesToEnrol: [] });
+    this.setState({
+      coursesToEnrol: [],
+      unenrollCourses: [],
+      searchedCourses: []
+    });
   }
 
   handleChange(event) {
@@ -81,9 +85,17 @@ class mainPage extends React.Component {
   }
 
   handleAddClick(courseName) {
-    this.setState(prevState => ({
-      coursesToEnrol: [...prevState.coursesToEnrol, courseName]
-    }));
+    const foundCourse = this.state.enrolledCourses.some(
+      course => course.courseName === courseName
+    );
+
+    if (foundCourse) {
+      alert("You are already enrolled in this course");
+    } else {
+      this.setState(prevState => ({
+        coursesToEnrol: [...prevState.coursesToEnrol, courseName]
+      }));
+    }
   }
 
   handleSearchClick() {
