@@ -64,7 +64,7 @@ public class Enrol {
         
         // Check enrollment conditions are met
         EnrollmentRequestVerifier.EnrollmentResult result =
-                enrollmentRequestVerifier.verify("username", courses, enrollmentDatabase,
+                enrollmentRequestVerifier.verify(username, courses, enrollmentDatabase,
                         LocalDateTime.parse("2020-06-10T16:00:00.00")
                 );
         
