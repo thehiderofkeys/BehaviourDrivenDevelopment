@@ -29,6 +29,10 @@ public class Enrol {
         enrolledCourses2.add(CourseCatalog.getInstance().search("SOFTENG 701").get(0));
         enrollmentDatabase.addEnrollment("rightUsrN", enrolledCourses1);
         enrollmentDatabase.addEnrollment("user123", enrolledCourses2);
+        enrollmentDatabase.addCompletedCourse("user123",
+                CourseCatalog.getInstance().search("SOFTENG 401").get(0));
+        enrollmentDatabase.addCompletedCourse("user123",
+                CourseCatalog.getInstance().search("SOFTENG 402").get(0));
 
     }
 
