@@ -22,7 +22,7 @@ public class MainPage {
     @FindBy(how = How.NAME, using="completedCourse")
     private List<WebElement> completedCourseElementsList;
 
-    @FindBy(how = How.NAME, using="enrollButton")
+    @FindBy(how = How.ID, using="enrollButton")
     private List<WebElement> enrollButtonElementsList;
 
     @FindBy(how = How.ID, using="errorMessage")
@@ -61,7 +61,7 @@ public class MainPage {
     }
 
     public String getSearchBarText(){
-        return courseSearchBarElement.getText();
+        return courseSearchBarElement.getAttribute("value");
     }
 
     public void pressSearchButton() {
@@ -69,8 +69,8 @@ public class MainPage {
     }
 
     public String getEnrolmentStatus(String course){
-        for (WebElement completedCourseElement : completedCourseElementsList){
-            if (completedCourseElement.getAttribute("value").equals(course)){
+        for (WebElement enrolledCourseElement : currentEnrolmentElementsList){
+            if (enrolledCourseElement.getText().equals(course)){
                 return ("Enrolled");
             }
         }
