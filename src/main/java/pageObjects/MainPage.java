@@ -40,6 +40,21 @@ public class MainPage {
     @FindBy(how = How.ID, using="searchButton")
     private WebElement searchButton;
 
+    @FindBy(how = How.ID, using="enrolledDetailsButton")
+    private List<WebElement> enrolledDetailsButtons;
+
+    @FindBy(how = How.ID, using="searchDetailsButton")
+    private List<WebElement> searchDetailsButtons;
+
+    @FindBy(how = How.ID, using="LectureTime")
+    private List<WebElement> lectureTimes;
+
+    @FindBy(how = How.ID, using="LabTime")
+    private List<WebElement> labTimes;
+
+    @FindBy(how = How.ID, using="TutorialTime")
+    private List<WebElement> tutorialTimes;
+
     public List<String> getCurrentEnrolmentsList(){
         List<String> currentEnrolmentsList = new ArrayList();
         for (WebElement currentEnrolledCourseElement : currentEnrolmentElementsList){
@@ -99,6 +114,53 @@ public class MainPage {
             }
         }
     }
+
+    public void expandDetailsOfEnrolledCourse(String specifiedCourse){
+        for (WebElement buttonElement: enrolledDetailsButtons){
+            if (buttonElement.getAttribute("courseName").equals(specifiedCourse)) {
+                buttonElement.click();
+                return;
+            }
+        }
+    }
+
+    public void expandDetailsOfSearchedCourse(String specifiedCourse){
+        for (WebElement buttonElement: searchDetailsButtons){
+            if (buttonElement.getAttribute("courseName").equals(specifiedCourse)) {
+                buttonElement.click();
+                return;
+            }
+        }
+    }
+
+    public String getLectureTime(String specifiedCourse){
+        for (WebElement lectureTime: lectureTimes){
+            if (lectureTime.getAttribute("courseName").equals(specifiedCourse)) {
+                return lectureTime.getText();
+            }
+        }
+        return "";
+    }
+
+    public String getLabTime(String specifiedCourse){
+        for (WebElement labTime: labTimes){
+            if (labTime.getAttribute("courseName").equals(specifiedCourse)) {
+                return labTime.getText();
+            }
+        }
+        return "";
+    }
+
+
+    public String getTutorialTime(String specifiedCourse){
+        for (WebElement tutorialTime: tutorialTimes){
+            if (tutorialTime.getAttribute("courseName").equals(specifiedCourse)) {
+                return tutorialTime.getText();
+            }
+        }
+        return "";
+    }
+
 
     public String getErrorMessage(){
         return errorMessageElement.getText();
