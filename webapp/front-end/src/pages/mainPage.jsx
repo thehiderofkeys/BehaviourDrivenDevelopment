@@ -1,15 +1,21 @@
 import React from "react";
+import moment from "moment";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import Button from "@material-ui/core/Button";
-import { Typography } from "@material-ui/core";
+import {
+  Typography,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 class mainPage extends React.Component {
   componentDidMount() {
@@ -19,28 +25,28 @@ class mainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      enrolledCourses: [{}],
+      enrolledCourses: [],
       userName: this.props.match.params.username,
       unenrollCourses: [],
       searchedCourses: [],
       courseSearch: "",
-      coursesToEnrol: []
+      coursesToEnrol: [],
     };
   }
 
   updateCourse() {
     fetch(`/api/enrollments/${this.state.userName}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     })
-      .then(res => res.json())
-      .then(response => this.setState({ enrolledCourses: response }))
+      .then((res) => res.json())
+      .then((response) => this.setState({ enrolledCourses: response }))
       .then(console.log(this.state.enrolledCourses));
   }
 
   handleRemoveClick(courseName) {
-    this.setState(prevState => ({
-      unenrollCourses: [...prevState.unenrollCourses, courseName]
+    this.setState((prevState) => ({
+      unenrollCourses: [...prevState.unenrollCourses, courseName],
     }));
 
     console.log(this.state.unenrollCourses);
@@ -50,9 +56,9 @@ class mainPage extends React.Component {
     fetch(`/api/enrollments/${this.state.userName}/unenroll`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state.unenrollCourses)
+      body: JSON.stringify(this.state.unenrollCourses),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(() => this.updateCourse());
   }
 
@@ -60,9 +66,9 @@ class mainPage extends React.Component {
     fetch(`/api/enrollments/${this.state.userName}/enroll`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state.coursesToEnrol)
+      body: JSON.stringify(this.state.coursesToEnrol),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(() => this.updateCourse());
   }
 
@@ -72,7 +78,7 @@ class mainPage extends React.Component {
     this.setState({
       coursesToEnrol: [],
       unenrollCourses: [],
-      searchedCourses: []
+      searchedCourses: [],
     });
   }
 
@@ -80,20 +86,20 @@ class mainPage extends React.Component {
     const val = event.target.value;
 
     this.setState({
-      courseSearch: val
+      courseSearch: val,
     });
   }
 
   handleAddClick(courseName) {
     const foundCourse = this.state.enrolledCourses.some(
-      course => course.courseName === courseName
+      (course) => course.courseName === courseName
     );
 
     if (foundCourse) {
       alert("You are already enrolled in this course");
     } else {
-      this.setState(prevState => ({
-        coursesToEnrol: [...prevState.coursesToEnrol, courseName]
+      this.setState((prevState) => ({
+        coursesToEnrol: [...prevState.coursesToEnrol, courseName],
       }));
     }
   }
@@ -101,10 +107,10 @@ class mainPage extends React.Component {
   handleSearchClick() {
     fetch(`/api/courses?search=` + this.state.courseSearch, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     })
-      .then(res => res.json())
-      .then(response => this.setState({ searchedCourses: response }))
+      .then((res) => res.json())
+      .then((response) => this.setState({ searchedCourses: response }))
       .then(console.log(this.state.searchedCourses));
   }
 
@@ -120,7 +126,7 @@ class mainPage extends React.Component {
             <TextField
               id="courseSearchBar"
               label="Search Course"
-              onChange={event => {
+              onChange={(event) => {
                 this.handleChange(event);
               }}
             />
@@ -138,22 +144,74 @@ class mainPage extends React.Component {
               <Typography align="left">Searched Courses</Typography>
             </div>
             <List>
-              {this.state.searchedCourses.map(course => (
+              {this.state.searchedCourses.map((course) => (
                 <div>
                   <ListItem key={course.courseName}>
-                    <ListItemText primary={course.courseName} />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        id="enrollButton"
-                        edge="end"
-                        courseName={course.courseName}
-                        onClick={() => {
-                          this.handleAddClick(course.courseName);
-                        }}
+                    <ExpansionPanel style={{ width: "100%" }}>
+                      <ExpansionPanelSummary
+                        expandIcon={
+                          <IconButton
+                            id="searchDetailsButton"
+                            courseName={course.courseName}
+                          >
+                            <ExpandMoreIcon />
+                          </IconButton>
+                        }
                       >
-                        <AddIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Typography id="currentEnrolledCourse">
+                            {course.courseName}
+                          </Typography>
+                          <IconButton
+                            id="enrollButton"
+                            edge="end"
+                            courseName={course.courseName}
+                            onClick={() => {
+                              this.handleAddClick(course.courseName);
+                            }}
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </div>
+                      </ExpansionPanelSummary>
+                      <ExpansionPanelDetails>
+                        <div>
+                          <Typography
+                            id="LectureTime"
+                            courseName={course.courseName}
+                          >
+                            Lecture Time:{" "}
+                            {moment(course.courseSchedule[0].startTime).format(
+                              "dddd ha"
+                            )}
+                          </Typography>
+                          <Typography
+                            id="TutorialTime"
+                            courseName={course.courseName}
+                          >
+                            Tutorial Time:{" "}
+                            {moment(course.courseSchedule[1].startTime).format(
+                              "dddd ha"
+                            )}
+                          </Typography>
+                          <Typography
+                            id="LabTime"
+                            courseName={course.courseName}
+                          >
+                            Lab Time:{" "}
+                            {moment(course.courseSchedule[2].startTime).format(
+                              "dddd ha"
+                            )}
+                          </Typography>
+                        </div>
+                      </ExpansionPanelDetails>
+                    </ExpansionPanel>
                   </ListItem>
                 </div>
               ))}
@@ -166,7 +224,7 @@ class mainPage extends React.Component {
             <Typography align="left">My Enrolment Cart</Typography>
           </div>
           <List>
-            {this.state.coursesToEnrol.map(course => (
+            {this.state.coursesToEnrol.map((course) => (
               <div>
                 <ListItem key={course}>
                   <ListItemText primary={course} />
@@ -182,29 +240,78 @@ class mainPage extends React.Component {
           </div>
           <Divider />
           <List>
-            {this.state.enrolledCourses.map(course => (
+            {this.state.enrolledCourses.map((course) => (
               <ListItem key={course.courseName}>
-                <ListItemText
-                  primary={course.courseName}
-                  id="currentEnrolledCourse"
-                  style={
-                    this.state.unenrollCourses.includes(course.courseName)
-                      ? { textDecorationLine: "line-through" }
-                      : {}
-                  }
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    id="unenrollButton"
-                    courseName={course.courseName}
-                    edge="end"
-                    onClick={() => {
-                      this.handleRemoveClick(course.courseName);
-                    }}
+                <ExpansionPanel style={{ width: "100%" }}>
+                  <ExpansionPanelSummary
+                    expandIcon={
+                      <IconButton
+                        id="enrolledDetailsButton"
+                        courseName={course.courseName}
+                      >
+                        <ExpandMoreIcon />
+                      </IconButton>
+                    }
                   >
-                    <RemoveIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        id="currentEnrolledCourse"
+                        style={
+                          this.state.unenrollCourses.includes(course.courseName)
+                            ? { textDecorationLine: "line-through" }
+                            : {}
+                        }
+                      >
+                        {course.courseName}
+                      </Typography>
+                      <IconButton
+                        id="unenrollButton"
+                        courseName={course.courseName}
+                        edge="end"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          this.handleRemoveClick(course.courseName);
+                        }}
+                      >
+                        <RemoveIcon />
+                      </IconButton>
+                    </div>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <div>
+                      <Typography
+                        id="LectureTime"
+                        courseName={course.courseName}
+                      >
+                        Lecture Time:{" "}
+                        {moment(course.courseSchedule[0].startTime).format(
+                          "dddd ha"
+                        )}
+                      </Typography>
+                      <Typography
+                        id="TutorialTime"
+                        courseName={course.courseName}
+                      >
+                        Tutorial Time:{" "}
+                        {moment(course.courseSchedule[1].startTime).format(
+                          "dddd ha"
+                        )}
+                      </Typography>
+                      <Typography id="LabTime" courseName={course.courseName}>
+                        Lab Time:{" "}
+                        {moment(course.courseSchedule[2].startTime).format(
+                          "dddd ha"
+                        )}
+                      </Typography>
+                    </div>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
               </ListItem>
             ))}
           </List>
