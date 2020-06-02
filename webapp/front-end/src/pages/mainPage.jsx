@@ -21,30 +21,11 @@ class mainPage extends React.Component {
     this.state = {
       enrolledCourses: [{}],
       userName: this.props.match.params.username,
-      unenrollCourses: []
+      unenrollCourses: [],
+      searchedCourses: [],
+      courseSearch: "",
+      coursesToEnrol: []
     };
-  }
-
-  async handleUnenrollClick() {
-    fetch(`/api/enrollments/${this.state.userName}/unenroll`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state.unenrollCourses)
-    })
-      .then(res => res.json())
-      .then(() => this.updateCourse());
-  }
-
-  handleRemoveClick(courseName) {
-    this.setState(prevState => ({
-      unenrollCourses: [...prevState.unenrollCourses, courseName]
-    }));
-
-    console.log(this.state.unenrollCourses);
-  }
-
-  async handleUpdateEnrolmentClick() {
-    await this.handleUnenrollClick();
   }
 
   updateCourse() {
@@ -57,6 +38,76 @@ class mainPage extends React.Component {
       .then(console.log(this.state.enrolledCourses));
   }
 
+  handleRemoveClick(courseName) {
+    this.setState(prevState => ({
+      unenrollCourses: [...prevState.unenrollCourses, courseName]
+    }));
+
+    console.log(this.state.unenrollCourses);
+  }
+
+  async handleUnenrollClick() {
+    fetch(`/api/enrollments/${this.state.userName}/unenroll`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state.unenrollCourses)
+    })
+      .then(res => res.json())
+      .then(() => this.updateCourse());
+  }
+
+  handleEnrolling() {
+    fetch(`/api/enrollments/${this.state.userName}/enroll`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state.coursesToEnrol)
+    })
+      .then(res => res.json())
+      .then(() => this.updateCourse());
+  }
+
+  async handleUpdateEnrolmentClick() {
+    await this.handleUnenrollClick();
+    await this.handleEnrolling();
+    this.setState({
+      coursesToEnrol: [],
+      unenrollCourses: [],
+      searchedCourses: []
+    });
+  }
+
+  handleChange(event) {
+    const val = event.target.value;
+
+    this.setState({
+      courseSearch: val
+    });
+  }
+
+  handleAddClick(courseName) {
+    const foundCourse = this.state.enrolledCourses.some(
+      course => course.courseName === courseName
+    );
+
+    if (foundCourse) {
+      alert("You are already enrolled in this course");
+    } else {
+      this.setState(prevState => ({
+        coursesToEnrol: [...prevState.coursesToEnrol, courseName]
+      }));
+    }
+  }
+
+  handleSearchClick() {
+    fetch(`/api/courses?search=` + this.state.courseSearch, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => res.json())
+      .then(response => this.setState({ searchedCourses: response }))
+      .then(console.log(this.state.searchedCourses));
+  }
+
   render() {
     // To something.
     return (
@@ -65,6 +116,64 @@ class mainPage extends React.Component {
           <div id="welcomeMessage">
             <p>Welcome</p>
           </div>
+          <div>
+            <TextField
+              id="courseSearchBar"
+              label="Search Course"
+              onChange={event => {
+                this.handleChange(event);
+              }}
+            />
+            <Button
+              id="searchButton"
+              variant="outlined"
+              onClick={() => this.handleSearchClick()}
+            >
+              Search
+            </Button>
+            <div>
+              <Divider />
+            </div>
+            <div>
+              <Typography align="left">Searched Courses</Typography>
+            </div>
+            <List>
+              {this.state.searchedCourses.map(course => (
+                <div>
+                  <ListItem key={course.courseName}>
+                    <ListItemText primary={course.courseName} />
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        id="enrollButton"
+                        edge="end"
+                        courseName={course.courseName}
+                        onClick={() => {
+                          this.handleAddClick(course.courseName);
+                        }}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                </div>
+              ))}
+            </List>
+          </div>
+          <div>
+            <Divider />
+          </div>
+          <div>
+            <Typography align="left">My Enrolment Cart</Typography>
+          </div>
+          <List>
+            {this.state.coursesToEnrol.map(course => (
+              <div>
+                <ListItem key={course}>
+                  <ListItemText primary={course} />
+                </ListItem>
+              </div>
+            ))}
+          </List>
           <div>
             <Divider />
           </div>
@@ -86,8 +195,8 @@ class mainPage extends React.Component {
                 />
                 <ListItemSecondaryAction>
                   <IconButton
-                    courseName={course.courseName}
                     id="unenrollButton"
+                    courseName={course.courseName}
                     edge="end"
                     onClick={() => {
                       this.handleRemoveClick(course.courseName);

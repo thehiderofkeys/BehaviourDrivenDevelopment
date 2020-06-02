@@ -35,6 +35,13 @@ public class EnrollmentDatabase {
         return concessionDatabase.get(username);
     }
 
+    public void addCompletedCourse(String username, Course c) {
+        if (!completedCourseDatabase.containsKey(username)){
+            completedCourseDatabase.put(username,new ArrayList<>());
+        }
+        completedCourseDatabase.get(username).add(c);
+    }
+
     public ArrayList<Course> getCompletedCourses(String username) { return completedCourseDatabase.get(username); }
 
     public ArrayList<Course> getCourseRequirements(String username) { return completedCourseDatabase.get(username); }
