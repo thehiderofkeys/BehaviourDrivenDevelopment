@@ -9,6 +9,8 @@ import pageObjects.MainPage;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class EnrollSteps {
     MainPage mainPage = new MainPage(Hooks.driver);
 
@@ -35,7 +37,7 @@ public class EnrollSteps {
     @Given("I enter a {string} into the search bar")
     public void i_enter_a_course_name_into_the_search_bar(String courseName){
         mainPage.enterCourseName(courseName);
-        assert(mainPage.getSearchBarText().equals(courseName));
+        assertEquals(courseName, mainPage.getSearchBarText());
     }
 
     @Given("I press the 'search' button")
@@ -43,7 +45,7 @@ public class EnrollSteps {
         mainPage.pressSearchButton();
     }
 
-    @When("I press the 'enroll' button and press the 'save' button")
+    @When("I press the 'enroll' button for {string} and press the 'save' button")
     public void i_press_the_enroll_button(String courseName){
         mainPage.pressAnEnrollButton(courseName);
         mainPage.pressSaveButton();
@@ -51,6 +53,6 @@ public class EnrollSteps {
 
     @Then("I am {string} in {string}")
     public void i_am_enrolled_in_the_course(String enrolmentStatus, String courseName){
-        assert(mainPage.getEnrolmentStatus(courseName).equals(enrolmentStatus));
+        assertEquals(enrolmentStatus, mainPage.getEnrolmentStatus(courseName));
     }
 }

@@ -11,7 +11,7 @@ Feature: Enroll into a course
     Given I am logged in as: <User> on the main page to enroll
     And I enter a <CourseName> into the search bar
     And I press the 'search' button
-    When I press the 'enroll' button and press the 'save' button
+    When I press the 'enroll' button for <CourseName> and press the 'save' button
     Then I am <EnrolmentStatus> in <CourseName>
 
     Examples:
@@ -24,7 +24,7 @@ Feature: Enroll into a course
     Given I am logged in as: <User> on the main page to enroll
     Given I enter a <CourseName> into the search bar
     And I press the 'search' button
-    When I press the 'enroll' button and press the 'save' button
+    When I press the 'enroll' button for <CourseName> and press the 'save' button
     Then I am <EnrolmentStatus> in <CourseName>
 
     Examples:
@@ -38,7 +38,7 @@ Feature: Enroll into a course
     Given I am logged in as: <User> on the main page to enroll
     Given I enter a <CourseName> into the search bar
     And I press the 'search' button
-    When I press the 'enroll' button and press the 'save' button
+    When I press the 'enroll' button for <CourseName> and press the 'save' button
     Then I am <EnrolmentStatus> in <CourseName>
 
     Examples:
