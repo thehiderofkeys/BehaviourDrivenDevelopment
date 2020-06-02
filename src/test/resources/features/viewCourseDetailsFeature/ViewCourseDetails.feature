@@ -11,9 +11,9 @@ Feature: View Course Details
 
 
     Examples:
-      | EnrolledCourse| LectureTime  | LabTime      | TutorialTime   |
+      | EnrolledCourse| LectureTime  | TutorialTime | LabTime        |
       | 'SOFTENG 754' | 'Monday 4pm' |'Tuesday 4pm' |'Wednesday 4pm' |
-      | 'SOFTENG 701' | 'Monday 10am'|'Monday 10am' |'Monday 10am'   |
+      | 'SOFTENG 701' | 'Monday 10am'|'Tuesday 10am'|'Wednesday 10am'|
 
   Scenario Outline: When I click on a returned course from a search, I should see the course details
     Given I searched for <SearchedCourse> in the search bar
@@ -24,7 +24,7 @@ Feature: View Course Details
 
 
     Examples:
-      | SearchedCourse| LectureTime  | LabTime      | TutorialTime   |
+      | SearchedCourse| LectureTime  | TutorialTime | LabTime        |
       | 'SOFTENG 754' | 'Monday 4pm' |'Tuesday 4pm' |'Wednesday 4pm' |
-      | 'SOFTENG 701' | 'Monday 10am'|'Monday 10am' |'Monday 10am'   |
+      | 'SOFTENG 701' | 'Monday 10am'|'Tuesday 10am'|'Wednesday 10am'|
 
