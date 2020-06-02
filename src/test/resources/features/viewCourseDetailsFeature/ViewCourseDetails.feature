@@ -5,9 +5,9 @@ Feature: View Course Details
   Scenario Outline: When I click on an enrolled course, I should see the course details
     Given My enrollment list includes <EnrolledCourse>
     When I click on the expansion button next to enrolled course, <EnrolledCourse>
-    Then I should be able to see the lecture time as: <LectureTime> for the course: <SearchedCourse>
-    And I should be able to see the lab time as: <LabTime> for the course: <SearchedCourse>
-    And I should be able to see the tutorial time as: <TutorialTime> for the course: <SearchedCourse>
+    Then I should be able to see the lecture time as: <LectureTime> for the course: <EnrolledCourse>
+    And I should be able to see the lab time as: <LabTime> for the course: <EnrolledCourse>
+    And I should be able to see the tutorial time as: <TutorialTime> for the course: <EnrolledCourse>
 
 
     Examples:
