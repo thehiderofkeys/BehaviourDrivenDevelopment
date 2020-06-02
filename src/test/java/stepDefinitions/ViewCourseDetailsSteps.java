@@ -21,6 +21,12 @@ public class ViewCourseDetailsSteps {
     public void my_enrollment_list_includes_enrolled_course(String enrolledCourse) {
         assertEquals("Enrolled",mainPage.getEnrolmentStatus(enrolledCourse));
     }
+
+    @Given("I searched for {string} in the search bar")
+    public void i_searched_for_course_in_the_search_bar(String searchedCourse) {
+        mainPage.enterCourseName(searchedCourse);
+        mainPage.pressSearchButton();
+    }
     @When("I click on the expansion button next to enrolled course, {string}")
     public void I_click_on_the_expansion_button_next_to_enrolled_course(String enrolledCourse) {
         mainPage.expandDetailsOfEnrolledCourse(enrolledCourse);
