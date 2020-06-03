@@ -7,9 +7,9 @@ Feature: Apply to enrol to a course via a concession
 
   Scenario Outline: Apply to enrol to a course via a concession, with a reason
 
-    When I press the 'apply for concession' button for <CourseName>
-    And I enter my <Reason>
-    And I press the 'submit concession' button
+    Given I press the 'apply for concession' button for <CourseName>
+    And I enter my <Reason> into the text box
+    When I press the 'submit concession' button
     Then I can see a <ConfirmationMessage> stating my <Reason>
 
     Examples:
@@ -19,8 +19,8 @@ Feature: Apply to enrol to a course via a concession
 
   Scenario Outline: Apply to enrol to a course via a concession, WITHOUT a reason
 
-    When I press the 'apply for concession' button for <CourseName>
-    And I press the 'submit concession' button
+    Given I press the 'apply for concession' button for <CourseName>
+    When I press the 'submit concession' button
     Then I can see a <ErrorMessage>
 
     Examples:
