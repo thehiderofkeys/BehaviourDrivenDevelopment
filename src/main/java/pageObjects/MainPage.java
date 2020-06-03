@@ -22,11 +22,17 @@ public class MainPage {
     @FindBy(how = How.NAME, using="completedCourse")
     private List<WebElement> completedCourseElementsList;
 
+    @FindBy(how = How.ID, using="failedToEnrollCourse")
+    private List<WebElement> failedToEnrollCourseElementsList;
+
     @FindBy(how = How.ID, using="enrollButton")
     private List<WebElement> enrollButtonElementsList;
 
     @FindBy(how = How.ID, using="errorMessage")
-    private WebElement errorMessageElement;
+    private List<WebElement> errorMessageElementList;
+
+    @FindBy(how = How.ID, using="errorMessageReason")
+    private List<WebElement> errorMessageReasonElementList;
 
     @FindBy(how = How.ID, using="unenrollButton")
     private List<WebElement> unenrollButtonList;
@@ -45,6 +51,9 @@ public class MainPage {
 
     @FindBy(how = How.ID, using="searchDetailsButton")
     private List<WebElement> searchDetailsButtons;
+
+    @FindBy(how = How.ID, using="failedDetailsButton")
+    private List<WebElement> failedDetailsButtons;
 
     @FindBy(how = How.ID, using="LectureTime")
     private List<WebElement> lectureTimes;
@@ -133,6 +142,15 @@ public class MainPage {
         }
     }
 
+    public void expandDetailsOfFailedCourse(String specifiedCourse){
+        for (WebElement buttonElement: failedDetailsButtons){
+            if (buttonElement.getAttribute("courseName").equals(specifiedCourse)) {
+                buttonElement.click();
+                return;
+            }
+        }
+    }
+
     public String getLectureTime(String specifiedCourse){
         for (WebElement lectureTime: lectureTimes){
             if (lectureTime.getAttribute("courseName").equals(specifiedCourse)) {
@@ -161,8 +179,31 @@ public class MainPage {
         return "";
     }
 
+    public Boolean didFailToEnrollInCourse(String specifiedCourse){
+        for (WebElement failedCourse: failedToEnrollCourseElementsList){
+            if (failedCourse.getText().equals(specifiedCourse)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public String getErrorMessage(){
-        return errorMessageElement.getText();
+
+    public String getErrorMessage(String specifiedCourse){
+        for (WebElement errorMessageElement: errorMessageElementList){
+            if (errorMessageElement.getAttribute("courseName").equals(specifiedCourse)) {
+                return errorMessageElement.getText();
+            }
+        }
+        return "";
+    }
+
+    public String getErrorMessageReason(String specifiedCourse){
+        for (WebElement errorMessageReasonElement: errorMessageReasonElementList){
+            if (errorMessageReasonElement.getAttribute("courseName").equals(specifiedCourse)) {
+                return errorMessageReasonElement.getText();
+            }
+        }
+        return "";
     }
 }
