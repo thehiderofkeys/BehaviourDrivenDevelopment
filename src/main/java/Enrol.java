@@ -2,9 +2,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Path("/enrollments")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -78,5 +76,24 @@ public class Enrol {
         
         enrollmentDatabase.addEnrollment(username,courses);
         return Response.ok(result.getResult()).build();
+    }
+
+    @POST
+    @Path("/{username}/concession")
+    public Response concession(@PathParam("username") String username, HashMap<String,String> payload){
+        String courseName = payload.get("courseName");
+        String reason = payload.get("reason");
+        Course course = CourseCatalog.getInstance().search(courseName).get(0);
+        Concession concession = new Concession(username,course, reason);
+
+        enrollmentDatabase.addConcessions(username, new ArrayList<>(Collections.singletonList(concession)));
+
+        return Response.ok(concession).build();
+    }
+
+    @GET
+    @Path("/{username}/concession")
+    public Response concession(@PathParam("username") String username){
+        return Response.ok(enrollmentDatabase.getConcessions(username)).build();
     }
 }
