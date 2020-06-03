@@ -5,8 +5,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pageObjects.MainPage;
 
-import static org.junit.Assert.assertEquals;
-
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -17,7 +15,7 @@ import pageObjects.MainPage;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 
 public class ViewReasoningForCourseEnrolmentDecisionsSteps {
@@ -49,16 +47,17 @@ public class ViewReasoningForCourseEnrolmentDecisionsSteps {
 
     @When("I click on the expansion button next to the course I failed to enroll in, {string}")
     public void i_click_on_the_expansion_button_next_to_failed_course(String courseName){
-        
+        mainPage.expandDetailsOfFailedCourse(courseName);
     }
 
     @Then("{string} should not be in the list of courses I failed to enroll in")
     public void course_should_not_be_in_the_list_of_courses_i_failed_to_enroll_in(String courseName){
-
+        assertFalse(mainPage.didFailToEnrollInCourse(courseName));
     }
 
     @Then("A {string} is displayed for the course {string}")
-    public void a_error_message_is_displayed_for_the_course(String errorMessage,String courseName){
-
+    public void a_error_message_reason_is_displayed_for_the_course(String errorMessageReason,String courseName){
+        assertEquals("Could not enroll, Reason:",mainPage.getErrorMessage(courseName));
+        assertEquals(errorMessageReason,mainPage.getErrorMessageReason(courseName));
     }
 }
