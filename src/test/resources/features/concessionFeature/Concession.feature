@@ -1,17 +1,16 @@
 Feature: Apply to enrol to a course via a concession
 
   Background:
-    Given I am logged in as rightUsrN on the main page
+    Given I am logged in as: 'rightUsrN' on the main page to enroll
     And I enter a 'SOFTENG 702' into the search bar
     And I press the 'search' button
     And I press the 'enroll' button for 'SOFTENG 702' and press the 'save' button
+    And I click on the expansion button next to the course I failed to enroll in, 'SOFTENG 702'
 
   Scenario Outline: Apply to enrol to a course via a concession, with a reason
-
     Given I enter my <Reason> into the text box for 'SOFTENG 702'
-    Given I press the 'apply for concession' button for 'SOFTENG 702'
-    When I press the 'submit concession' button
-    Then I can see a <ConcessionMessage> stating my <Reason>
+    When I press the 'apply for concession' button for 'SOFTENG 702'
+    Then I can see a <ConcessionMessage> stating the reason for my concession for 'SOFTENG702'
 
     Examples:
       | Reason                                | ConcessionMessage     |
@@ -20,11 +19,10 @@ Feature: Apply to enrol to a course via a concession
 
   Scenario Outline: Apply to enrol to a course via a concession, WITHOUT a reason
 
-    Given I press the 'apply for concession' button for <CourseName>
-    When I press the 'submit concession' button
-    Then I can see a <ErrorMessage>
+    When I press the 'apply for concession' button for 'SOFTENG 702'
+    Then I can see an alert saying <ErrorMessage>
 
     Examples:
-      | CourseName          | ErrorMessage     |
-      | 'SOFTENG 702'       | 'Please give a reason for your concession.'     |
-      | 'SOFTENG 703'       | 'Please give a reason for your concession.'     |
+      | ErrorMessage     |
+      | 'Please give a reason for your concession.'     |
+      | 'Please give a reason for your concession.'     |
