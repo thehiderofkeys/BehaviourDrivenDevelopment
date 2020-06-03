@@ -55,6 +55,9 @@ public class MainPage {
     @FindBy(how = How.ID, using="TutorialTime")
     private List<WebElement> tutorialTimes;
 
+    @FindBy(how = How.ID, using="updateEnrolmentsButton")
+    private WebElement updateEnrolmentsButton;
+
     public List<String> getCurrentEnrolmentsList(){
         List<String> currentEnrolmentsList = new ArrayList();
         for (WebElement currentEnrolledCourseElement : currentEnrolmentElementsList){
@@ -90,6 +93,10 @@ public class MainPage {
             }
         }
         return ("NotEnrolled");
+    }
+
+    public void pressUpdateEnrolmentsButton(){
+        updateEnrolmentsButton.click();
     }
 
     public void pressAnUnenrollButton(String specifiedCourse){

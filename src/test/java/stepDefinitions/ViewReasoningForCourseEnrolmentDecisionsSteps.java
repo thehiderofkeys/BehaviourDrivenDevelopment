@@ -39,13 +39,14 @@ public class ViewReasoningForCourseEnrolmentDecisionsSteps {
 
         @Given("I am logged in as: {string} on the main page to enroll")
         public void i_am_logged_in_on_the_main_page(String username) {
-
+            Hooks.driver.get("http://localhost:3000/"+username+"/main");
             // check we're on a given web page
             assert(Hooks.driver.getCurrentUrl().equals("http://localhost:3000/"+username+"/main"));
         }
 
         @Given("I enter a {string} into the search bar")
         public void i_enter_a_course_name_into_the_search_bar(String courseName){
+            mainPage.enterCourseName(courseName);
 
             assertEquals(courseName, mainPage.getSearchBarText());
         }
@@ -57,17 +58,17 @@ public class ViewReasoningForCourseEnrolmentDecisionsSteps {
 
         @Given("I press the 'enroll' button for {string}")
         public void i_press_the_enroll_button(String courseName){
-
+            mainPage.pressAnEnrollButton(courseName);
         }
 
         @Given("I press the 'save' button")
         public void i_press_the_save_button(){
-
+            mainPage.pressSaveButton();
         }
 
         @When("I press the 'update enrolments' button")
         public void i_press_the_update_enrolments_button(){
-
+            mainPage.pressUpdateEnrolmentsButton();
         }
 
         @Then("A <ErrorMessage> is displayed")
