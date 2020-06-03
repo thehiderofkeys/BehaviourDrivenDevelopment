@@ -16,7 +16,12 @@ public class Enrol {
     private EnrollmentRequestVerifier enrollmentRequestVerifier;
 
     public Enrol() {
+        resetEnollments();
+    }
 
+    @GET
+    @Path("/load")
+    public String resetEnollments(){
         // init fields
         enrollmentDatabase = new EnrollmentDatabase();
         enrollmentProcessor = new EnrollmentProcessor(enrollmentDatabase);
@@ -33,8 +38,9 @@ public class Enrol {
                 CourseCatalog.getInstance().search("SOFTENG 401").get(0));
         enrollmentDatabase.addCompletedCourse("user123",
                 CourseCatalog.getInstance().search("SOFTENG 402").get(0));
-
+        return "Server Reset";
     }
+
 
     @GET
     @Path("/{username}")
