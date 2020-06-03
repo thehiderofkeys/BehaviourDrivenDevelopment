@@ -55,6 +55,18 @@ public class MainPage {
     @FindBy(how = How.ID, using="TutorialTime")
     private List<WebElement> tutorialTimes;
 
+    @FindBy(how = How.ID, using="applyForConcessionButton")
+    private List<WebElement> applyForConcessionButtonElementList;
+
+    @FindBy(how = How.ID, using="reasonTextBox")
+    private WebElement reasonTextBoxElement;
+
+    @FindBy(how = How.ID, using="submitConcessionButton")
+    private WebElement submitConcessionButtonElement;
+
+    @FindBy(how = How.ID, using="concessionConfirmationMessage")
+    private WebElement concessionConfirmationMessageElement;
+
     public List<String> getCurrentEnrolmentsList(){
         List<String> currentEnrolmentsList = new ArrayList();
         for (WebElement currentEnrolledCourseElement : currentEnrolmentElementsList){
@@ -69,6 +81,31 @@ public class MainPage {
             completedCoursesList.add(completedCourseElement.getAttribute("value"));
         }
         return completedCoursesList;
+    }
+
+    public void pressApplyForConcessionButton(String courseName){
+        for (WebElement buttonElement : applyForConcessionButtonElementList){
+            if (buttonElement.getAttribute("courseName").equals(courseName)){
+                buttonElement.click();
+                return;
+            }
+        }
+    }
+
+    public String getConcessionConfirmationMessage(){
+        return concessionConfirmationMessageElement.getText();
+    }
+
+    public void enterReason(String reason){
+        reasonTextBoxElement.sendKeys(reason);
+    }
+
+    public String getReasonTextBoxText(){
+        return reasonTextBoxElement.getText();
+    }
+
+    public void pressSubmitConcessionButton(){
+        submitConcessionButtonElement.click();
     }
 
     public void enterCourseName(String search){
