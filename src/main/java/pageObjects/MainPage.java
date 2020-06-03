@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainPage {
+    private WebDriver driver;
 
     public MainPage(WebDriver driver){
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
     @FindBy(how = How.ID, using="currentEnrolledCourse")
@@ -55,6 +57,9 @@ public class MainPage {
     @FindBy(how = How.ID, using="failedDetailsButton")
     private List<WebElement> failedDetailsButtons;
 
+    @FindBy(how = How.ID, using="concessionDetailsButton")
+    private List<WebElement> concessionDetailsButtons;
+
     @FindBy(how = How.ID, using="LectureTime")
     private List<WebElement> lectureTimes;
 
@@ -68,13 +73,10 @@ public class MainPage {
     private List<WebElement> applyForConcessionButtonElementList;
 
     @FindBy(how = How.ID, using="reasonTextBox")
-    private WebElement reasonTextBoxElement;
+    private List<WebElement> reasonTextBoxElementList;
 
-    @FindBy(how = How.ID, using="submitConcessionButton")
-    private WebElement submitConcessionButtonElement;
-
-    @FindBy(how = How.ID, using="concessionConfirmationMessage")
-    private WebElement concessionConfirmationMessageElement;
+    @FindBy(how = How.ID, using="concessionText")
+    private List<WebElement> concessionTextElementList;
 
     public List<String> getCurrentEnrolmentsList(){
         List<String> currentEnrolmentsList = new ArrayList();
@@ -101,20 +103,31 @@ public class MainPage {
         }
     }
 
-    public String getConcessionConfirmationMessage(){
-        return concessionConfirmationMessageElement.getText();
+    public String getConcessionText(String specifiedCourse){
+        for (WebElement concessionText: concessionTextElementList){
+            if (concessionText.getAttribute("courseName").equals(specifiedCourse)) {
+                return concessionText.getText();
+            }
+        }
+        return "";
     }
 
-    public void enterReason(String reason){
-        reasonTextBoxElement.sendKeys(reason);
+    public void enterReason(String reason, String specifiedCourse){
+        for (WebElement reasonTextBox: reasonTextBoxElementList){
+            if (reasonTextBox.getAttribute("courseName").equals(specifiedCourse)) {
+                reasonTextBox.sendKeys(reason);
+                return;
+            }
+        }
     }
 
-    public String getReasonTextBoxText(){
-        return reasonTextBoxElement.getText();
-    }
-
-    public void pressSubmitConcessionButton(){
-        submitConcessionButtonElement.click();
+    public String getReasonTextBoxText(String specifiedCourse){
+        for (WebElement reasonTextBox: reasonTextBoxElementList){
+            if (reasonTextBox.getAttribute("courseName").equals(specifiedCourse)) {
+                return reasonTextBox.getAttribute("value");
+            }
+        }
+        return "";
     }
 
     public void enterCourseName(String search){
@@ -188,6 +201,15 @@ public class MainPage {
         }
     }
 
+    public void expandDetailsOfConcession(String specifiedCourse){
+        for (WebElement buttonElement: concessionDetailsButtons){
+            if (buttonElement.getAttribute("courseName").equals(specifiedCourse)) {
+                buttonElement.click();
+                return;
+            }
+        }
+    }
+
     public String getLectureTime(String specifiedCourse){
         for (WebElement lectureTime: lectureTimes){
             if (lectureTime.getAttribute("courseName").equals(specifiedCourse)) {
@@ -242,5 +264,9 @@ public class MainPage {
             }
         }
         return "";
+    }
+
+    public String getAlertMessage(){
+        return driver.switchTo().alert().getText();
     }
 }
