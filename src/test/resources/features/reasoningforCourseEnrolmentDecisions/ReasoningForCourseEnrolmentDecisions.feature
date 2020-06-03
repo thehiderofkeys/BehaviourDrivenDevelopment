@@ -30,7 +30,7 @@ Feature: Get a message to tell the user of any problem with their enrolment
 
     Examples:
       | User       | CourseName          | ErrorMessage         |
-      | 'rightUsrN'| 'SOFTENG 702'       | 'Prerequisites not met'          |
+      | 'rightUsrN'| 'SOFTENG 702'       | '• Prerequisites not met'          |
 
   Scenario Outline: Enroll into a course that is closed.
 
@@ -43,4 +43,4 @@ Feature: Get a message to tell the user of any problem with their enrolment
 
     Examples:
       | User      | CourseName          | ErrorMessage         |
-      | 'user123' | 'COMPSYS 726'       | 'Closed'             |
+      | 'user123' | 'COMPSYS 726'       | '• Closed'             |
