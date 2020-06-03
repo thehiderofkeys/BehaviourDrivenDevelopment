@@ -22,7 +22,7 @@ public class MainPage {
     @FindBy(how = How.NAME, using="completedCourse")
     private List<WebElement> completedCourseElementsList;
 
-    @FindBy(how = How.NAME, using="failedToEnrollCourse")
+    @FindBy(how = How.ID, using="failedToEnrollCourse")
     private List<WebElement> failedToEnrollCourseElementsList;
 
     @FindBy(how = How.ID, using="enrollButton")
