@@ -29,7 +29,7 @@ Feature: Get a message to tell the user of any problem with their enrolment
     And I press the 'enroll' button for <CourseName>
     And I press the 'save' button
     When I press the 'update enrolments' button
-    Then a <ErrorMessage> is displayed
+    Then A <ErrorMessage> is displayed
 
     Examples:
       | User       | CourseName          | ErrorMessage         |
