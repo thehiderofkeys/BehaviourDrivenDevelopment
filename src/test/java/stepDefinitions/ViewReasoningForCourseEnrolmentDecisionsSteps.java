@@ -55,7 +55,7 @@ public class ViewReasoningForCourseEnrolmentDecisionsSteps {
         assertFalse(mainPage.didFailToEnrollInCourse(courseName));
     }
 
-    @Then("A {string} is displayed for the course {string}")
+    @Then("An error message: {string} is displayed for the course {string}")
     public void a_error_message_reason_is_displayed_for_the_course(String errorMessageReason,String courseName){
         assertEquals("Could not enroll, Reason:",mainPage.getErrorMessage(courseName));
         assertEquals(errorMessageReason,mainPage.getErrorMessageReason(courseName));
