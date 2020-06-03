@@ -31,6 +31,7 @@ class mainPage extends React.Component {
       searchedCourses: [],
       courseSearch: "",
       coursesToEnrol: [],
+      coursesThatHaveFailedToEnrol: [],
     };
   }
 
@@ -62,14 +63,19 @@ class mainPage extends React.Component {
       .then(() => this.updateCourse());
   }
 
-  handleEnrolling() {
+  async handleEnrolling() {
     fetch(`/api/enrollments/${this.state.userName}/enroll`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(this.state.coursesToEnrol),
     })
       .then((res) => res.json())
-      .then(() => this.updateCourse());
+      .then((json) => {
+        this.setState({
+          coursesThatHaveFailedToEnrol: json,
+        });
+        this.updateCourse();
+      });
   }
 
   async handleUpdateEnrolmentClick() {
@@ -115,6 +121,7 @@ class mainPage extends React.Component {
   }
 
   render() {
+    const bull = <span>•</span>;
     // To something.
     return (
       <div>
@@ -172,7 +179,8 @@ class mainPage extends React.Component {
                             id="enrollButton"
                             edge="end"
                             courseName={course.courseName}
-                            onClick={() => {
+                            onClick={(event) => {
+                              event.stopPropagation();
                               this.handleAddClick(course.courseName);
                             }}
                           >
@@ -326,6 +334,63 @@ class mainPage extends React.Component {
             Update Enrolments
           </Button>
         </div>
+        <div>
+          <Typography align="left">Failed to enrol in these courses</Typography>
+        </div>
+        <List>
+          {this.state.coursesThatHaveFailedToEnrol.map((course) => (
+            <div>
+              <ListItem key={course.courseName}>
+                <ExpansionPanel style={{ width: "100%" }}>
+                  <ExpansionPanelSummary
+                    expandIcon={
+                      <IconButton
+                        id="failedDetailsButton"
+                        courseName={course.courseName}
+                      >
+                        <ExpandMoreIcon />
+                      </IconButton>
+                    }
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography id="failedEnrolledCourse">
+                        {course.courseName}
+                      </Typography>
+                    </div>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <div>
+                      <Typography
+                        id="errorMessage"
+                        courseName={course.courseName}
+                      >
+                        Could not enroll, Reason:
+                      </Typography>
+                      <List>
+                        {course.Reasons.map((Reason) => (
+                          <ListItem>
+                            <Typography
+                              id="errorMessageReason"
+                              courseName={course.courseName}
+                            >
+                              {bull} {Reason.value}
+                            </Typography>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </div>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              </ListItem>
+            </div>
+          ))}
+        </List>
       </div>
     );
   }
