@@ -25,6 +25,7 @@ public class Hooks {
             System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
             driver = new FirefoxDriver();
         }
+        driver.get("http://localhost:8080/api/enrollments/load");
         driver.get("http://localhost:3000");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);

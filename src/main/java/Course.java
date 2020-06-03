@@ -84,4 +84,9 @@ public class Course {
             return null;
         }
     }
+
+    @Override
+    public String toString(){
+        return courseName;
+    }
 }

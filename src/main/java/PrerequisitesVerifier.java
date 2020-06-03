@@ -9,6 +9,9 @@ public class PrerequisitesVerifier {
         ArrayList<Course> unacceptedCourses = new ArrayList<>(selectedCourses);
         // check database to retrieve list of completed courses for user
         ArrayList<Course> completedCourses = enrollmentDatabase.getCompletedCourses(username);
+        if (completedCourses == null){
+            completedCourses = new ArrayList<>();
+        }
 
         // for each selected course, retrieve a list of prerequisite courses
         for(Course selectedCourse : selectedCourses){

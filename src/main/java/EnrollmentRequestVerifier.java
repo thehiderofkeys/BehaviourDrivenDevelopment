@@ -54,8 +54,15 @@ public class EnrollmentRequestVerifier {
             return declined.get(course);
         }
 
-        public HashMap<Course,EnumSet<Reason>> getResult(){
-            return declined;
+        public ArrayList<HashMap<String,Object>> getResult(){
+            ArrayList<HashMap<String,Object>> declinedList = new ArrayList<>();
+            for (Course declinedCourse:declined.keySet()){
+                HashMap<String,Object> declinedElement = new HashMap<>();
+                declinedElement.put("courseName", declinedCourse.getCourseName());
+                declinedElement.put("Reasons", declined.get(declinedCourse));
+                declinedList.add(declinedElement);
+            }
+            return declinedList;
         }
 
     }
