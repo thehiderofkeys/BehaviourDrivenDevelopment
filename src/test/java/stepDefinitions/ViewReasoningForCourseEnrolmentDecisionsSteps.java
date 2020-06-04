@@ -50,6 +50,17 @@ public class ViewReasoningForCourseEnrolmentDecisionsSteps {
         mainPage.expandDetailsOfFailedCourse(courseName);
     }
 
+    @When("I press the 'enroll' button for {string}")
+    public void i_press_the_enroll_button(String courseName){
+        mainPage.pressAnEnrollButton(courseName);
+    }
+
+    @When("I click on the expansion button next to the courses I failed to enroll in, {string},{string}")
+    public void i_click_on_the_expansion_button_next_to_failed_courses(String firstCourse,String secondCourse){
+        mainPage.expandDetailsOfFailedCourse(firstCourse);
+        mainPage.expandDetailsOfFailedCourse(secondCourse);
+    }
+
     @Then("{string} should not be in the list of courses I failed to enroll in")
     public void course_should_not_be_in_the_list_of_courses_i_failed_to_enroll_in(String courseName){
         assertFalse(mainPage.didFailToEnrollInCourse(courseName));
