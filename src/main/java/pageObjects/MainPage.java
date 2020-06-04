@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +115,7 @@ public class MainPage {
 
     public void enterReason(String reason, String specifiedCourse){
         for (WebElement reasonTextBox: reasonTextBoxElementList){
-            if (reasonTextBox.getAttribute("courseName").equals(specifiedCourse)) {
+            if (reasonTextBox.getAttribute("name").equals(specifiedCourse)) {
                 reasonTextBox.sendKeys(reason);
                 return;
             }
@@ -123,7 +124,7 @@ public class MainPage {
 
     public String getReasonTextBoxText(String specifiedCourse){
         for (WebElement reasonTextBox: reasonTextBoxElementList){
-            if (reasonTextBox.getAttribute("courseName").equals(specifiedCourse)) {
+            if (reasonTextBox.getAttribute("name").equals(specifiedCourse)) {
                 return reasonTextBox.getAttribute("value");
             }
         }
