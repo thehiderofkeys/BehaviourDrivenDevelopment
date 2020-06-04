@@ -1,4 +1,4 @@
-Feature: Logging in
+Feature: SSO Login
 
   Scenario Outline: User logging in
 

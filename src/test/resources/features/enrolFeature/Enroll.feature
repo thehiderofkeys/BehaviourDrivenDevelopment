@@ -1,4 +1,4 @@
-Feature: Enroll into a course
+Feature: Enrolling courses
 
   Background:
     Given user123 has completed SOFTENG 401,SOFTENG 402

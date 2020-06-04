@@ -1,4 +1,4 @@
-Feature: Viewing current enrolments
+Feature: View Currently Enrolled Courses
 
   Scenario Outline: User requesting, then seeing current enrolments
 
