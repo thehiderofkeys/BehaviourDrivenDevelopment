@@ -24,7 +24,7 @@ public class ConcessionSteps {
     }
 
     @Then("I can see a {string} stating the reason for my concession for {string}")
-    public void i_can_see_a_concession_text_stating_the_reason_for_my_concession(String concessionText, String courseName){
+    public void i_can_see_a_concession_text_stating_the_reason_for_my_concession(String concessionText, String courseName) {
         mainPage.expandDetailsOfConcession(courseName);
         assertEquals(concessionText, mainPage.getConcessionText(courseName));
     }
