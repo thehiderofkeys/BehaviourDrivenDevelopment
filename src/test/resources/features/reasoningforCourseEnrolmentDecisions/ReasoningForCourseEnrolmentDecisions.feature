@@ -44,3 +44,20 @@ Feature: Get a message to tell the user of any problem with their enrolment
     Examples:
       | User      | CourseName          | ErrorMessage         |
       | 'user123' | 'COMPSYS 726'       | '• Closed'             |
+
+  Scenario Outline: Enroll into two courses that clash
+
+    Given I am logged in as: <User> on the main page to enroll
+    And I enter a <FirstCourseName> into the search bar
+    And I press the 'search' button
+    And I press the 'enroll' button for <FirstCourseName>
+    And I enter a <SecondCourseName> into the search bar
+    And I press the 'search' button
+    And I press the 'enroll' button for <SecondCourseName> and press the 'save' button
+    When I click on the expansion button next to the courses I failed to enroll in, <FirstCourseName>,<SecondCourseName>
+    Then An error message: <ErrorMessage> is displayed for the course <FirstCourseName>
+    Then An error message: <ErrorMessage> is displayed for the course <SecondCourseName>
+
+    Examples:
+      | User       | FirstCourseName     | SecondCourseName    | ErrorMessage         |
+      | 'rightUsrN'| 'SOFTENG 701'       | 'SOFTENG 703'       | '• Clash'             |

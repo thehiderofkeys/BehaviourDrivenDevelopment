@@ -132,6 +132,7 @@ public class MainPage {
     }
 
     public void enterCourseName(String search){
+        courseSearchBarElement.clear();
         courseSearchBarElement.sendKeys(search);
     }
 

@@ -38,6 +38,9 @@ public class CourseCatalog {
         createCourse("SOFTENG 701",
                 "2014-04-28T10:00:00.00","2014-04-29T10:00:00.00","2014-04-30T10:00:00.00",
                 "2020-05-28T16:00:00.00","2020-07-28T16:00:00.00",50,new ArrayList<>());
+        createCourse("SOFTENG 703",
+                "2014-04-28T10:00:00.00","2014-04-29T10:00:00.00","2014-04-30T10:00:00.00",
+                "2020-05-28T16:00:00.00","2020-07-28T16:00:00.00",50,new ArrayList<>());
         ArrayList<String> prereq = new ArrayList<>(Arrays.asList("SOFTENG 401", "SOFTENG 402"));
         createCourse("SOFTENG 702",
                 "2014-04-28T12:00:00.00","2014-04-29T12:00:00.00","2014-04-30T12:00:00.00",
