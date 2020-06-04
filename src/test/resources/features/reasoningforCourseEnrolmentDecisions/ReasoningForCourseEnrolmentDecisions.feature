@@ -1,4 +1,4 @@
-Feature: Get a message to tell the user of any problem with their enrolment
+Feature: Reasoning for Rejected Enrollment
 
   Background:
     Given user123 has completed SOFTENG 401,SOFTENG 402

@@ -1,4 +1,4 @@
-Feature: View Course Details
+Feature: View Courses and their Details
   Background:
     Given I am logged in as 'user123' on the main page
 

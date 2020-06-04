@@ -1,4 +1,4 @@
-Feature: Apply to enrol to a course via a concession
+Feature: Concessions
 
   Background:
     Given I am logged in as: 'rightUsrN' on the main page to enroll
