@@ -10,7 +10,7 @@ Feature: Apply to enrol to a course via a concession
   Scenario Outline: Apply to enrol to a course via a concession, with a reason
     Given I enter my <Reason> into the text box for 'SOFTENG 702'
     When I press the 'apply for concession' button for 'SOFTENG 702'
-    Then I can see a <ConcessionMessage> stating the reason for my concession for 'SOFTENG702'
+    Then I can see a <ConcessionMessage> stating the reason for my concession for 'SOFTENG 702'
 
     Examples:
       | Reason                                | ConcessionMessage     |
