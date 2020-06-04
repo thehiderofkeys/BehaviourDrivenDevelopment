@@ -20,6 +20,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 class mainPage extends React.Component {
   componentDidMount() {
     this.updateCourse();
+    this.getConcession();
   }
 
   constructor(props) {
@@ -32,6 +33,8 @@ class mainPage extends React.Component {
       courseSearch: "",
       coursesToEnrol: [],
       coursesThatHaveFailedToEnrol: [],
+      concessionReason: "",
+      appliedConcessions: [],
     };
   }
 
@@ -96,6 +99,14 @@ class mainPage extends React.Component {
     });
   }
 
+  handleTextFieldChange(event) {
+    const val = event.target.value;
+
+    this.setState({
+      concessionReason: val,
+    });
+  }
+
   handleAddClick(courseName) {
     const foundCourse = this.state.enrolledCourses.some(
       (course) => course.courseName === courseName
@@ -120,6 +131,40 @@ class mainPage extends React.Component {
       .then(console.log(this.state.searchedCourses));
   }
 
+  handleConcessionClick(courseName) {
+    if (this.state.concessionReason === "") {
+      alert("Please give a reason for your concession.");
+    } else {
+      fetch(`/api/enrollments/${this.state.userName}/concession`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          courseName: courseName,
+          reason: this.state.concessionReason,
+        }),
+      })
+        .then((res) => res.json())
+        .then(() => {
+          this.setState({
+            concessionReason: "",
+            coursesThatHaveFailedToEnrol: this.state.coursesThatHaveFailedToEnrol.filter(
+              (course) => course.courseName !== courseName
+            ),
+          });
+          this.getConcession();
+        });
+    }
+  }
+
+  async getConcession() {
+    fetch(`/api/enrollments/${this.state.userName}/concession`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((response) => this.setState({ appliedConcessions: response }))
+      .then(console.log(this.state.appliedConcessions));
+  }
   render() {
     const bull = <span>•</span>;
     // To something.
@@ -365,25 +410,94 @@ class mainPage extends React.Component {
                     </div>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
-                    <div>
-                      <Typography
-                        id="errorMessage"
-                        courseName={course.courseName}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div>
+                        <Typography
+                          id="errorMessage"
+                          courseName={course.courseName}
+                        >
+                          Could not enroll, Reason:
+                        </Typography>
+                        <List>
+                          {course.Reasons.map((Reason) => (
+                            <ListItem>
+                              <Typography
+                                id="errorMessageReason"
+                                courseName={course.courseName}
+                              >
+                                {bull} {Reason.value}
+                              </Typography>
+                            </ListItem>
+                          ))}
+                        </List>
+                      </div>
+                      <div>
+                        <TextField
+                          name={course.courseName}
+                          id="reasonTextBox"
+                          label="Reason for concession"
+                          onChange={(event) => {
+                            this.handleTextFieldChange(event);
+                          }}
+                        />
+                        <Button
+                          id="applyForConcessionButton"
+                          courseName={course.courseName}
+                          variant="outlined"
+                          onClick={() => {
+                            this.handleConcessionClick(course.courseName);
+                          }}
+                        >
+                          Apply for Concession
+                        </Button>
+                      </div>
+                    </div>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              </ListItem>
+            </div>
+          ))}
+        </List>
+        <div>
+          <Typography align="left">My Concessions</Typography>
+        </div>
+        <List>
+          {this.state.appliedConcessions.map((concession) => (
+            <div>
+              <ListItem key={concession.course.courseName}>
+                <ExpansionPanel style={{ width: "100%" }}>
+                  <ExpansionPanelSummary
+                    expandIcon={
+                      <IconButton
+                        id="concessionDetailsButton"
+                        courseName={concession.course.courseName}
                       >
-                        Could not enroll, Reason:
+                        <ExpandMoreIcon />
+                      </IconButton>
+                    }
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography id="concessionCourse">
+                        {concession.course.courseName}
                       </Typography>
-                      <List>
-                        {course.Reasons.map((Reason) => (
-                          <ListItem>
-                            <Typography
-                              id="errorMessageReason"
-                              courseName={course.courseName}
-                            >
-                              {bull} {Reason.value}
-                            </Typography>
-                          </ListItem>
-                        ))}
-                      </List>
+                    </div>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div>
+                        <Typography
+                          id="concessionText"
+                          courseName={concession.course.courseName}
+                        >
+                          Concession: {concession.reason}
+                        </Typography>
+                      </div>
                     </div>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
